@@ -4,13 +4,31 @@ import {colors} from '../theme/colors';
 import InputLine from '../components/atoms/InputLine/InputLine';
 import {globalStyles} from '../theme/globalStyles';
 import {size} from '../theme/fonts';
+import Spacer from '../components/atoms/Spacer/Spacer';
+import InputLineLabel from '../components/molecules/InputLineLabel/InputLineLabel';
 
 const SignIn = () => {
-  const [name, setName] = useState('second');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <View style={[globalStyles.container, {paddingHorizontal: 30}]}>
       <Text style={styles.title}>Login</Text>
-      <InputLine placeholder="full Name" value={name} onChange={setName} />
+      <Spacer vertical={20} />
+      <InputLineLabel
+        label="Email"
+        value={email}
+        onChange={setEmail}
+        width="100%"
+        inputTypes="email-address"
+      />
+      <Spacer vertical={40} />
+      <InputLineLabel
+        label="Password"
+        value={password}
+        onChange={setPassword}
+        width="100%"
+        password
+      />
     </View>
   );
 };
