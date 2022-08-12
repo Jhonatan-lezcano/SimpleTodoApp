@@ -1,21 +1,14 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Provider} from 'react-redux';
+import {store} from './src/store/store';
+import Main from './Main';
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Hello world!</Text>
-    </View>
+    <Provider store={store}>
+      <Main />
+    </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-});
 
 export default App;
