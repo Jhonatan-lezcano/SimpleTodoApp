@@ -1,4 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {colors} from '../theme/colors';
 import InputLine from '../components/atoms/InputLine/InputLine';
@@ -13,7 +19,9 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
-    <View style={[globalStyles.container, {paddingHorizontal: 30}]}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={[globalStyles.container, {paddingHorizontal: 30}]}>
       <Text style={styles.title}>Login</Text>
       <Spacer vertical={20} />
       <InputLineLabel
@@ -46,7 +54,7 @@ const SignIn = () => {
         titleColor={colors.primary}
         onPress={() => console.log('Forgot Password?')}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
