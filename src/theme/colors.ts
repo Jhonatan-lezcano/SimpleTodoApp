@@ -1,10 +1,11 @@
 export const colors = {
   background: '#f0efeb',
-  primary: '#6b705c',
-  secondary: '#cb997e',
-  tertiary: '#b7b7a4',
+  primary: '#1d3557',
+  secondary: '#457b9d',
+  tertiary: '#e63946',
   text: '#2D3436',
   textSecondary: '#A4A4A4',
+  black: '#212529',
 };
 
 export const darkMode = {

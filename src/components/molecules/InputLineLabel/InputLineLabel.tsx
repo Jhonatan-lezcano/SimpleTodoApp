@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {colors} from '../../../theme/colors';
@@ -21,6 +21,7 @@ const InputLineLabel = ({
   inputTypes,
   password,
 }: Props) => {
+  const [secureText, setSecureText] = useState(password);
   return (
     <View style={{width}}>
       <Text style={styles.label}>{label}</Text>
@@ -28,11 +29,22 @@ const InputLineLabel = ({
         value={value}
         onChange={onChange}
         inputTypes={inputTypes}
-        password={password}
+        password={secureText}
       />
-      <TouchableOpacity>
-        <Image source={require('../../../assets/view.png')} />
-      </TouchableOpacity>
+      {password && (
+        <TouchableOpacity
+          style={styles.btnPassword}
+          onPress={() => setSecureText(!secureText)}>
+          <Image
+            source={
+              secureText
+                ? require('../../../assets/view.png')
+                : require('../../../assets/hide.png')
+            }
+            style={{width: '100%'}}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -51,5 +63,11 @@ const styles = StyleSheet.create({
   label: {
     color: colors.textSecondary,
     paddingBottom: 5,
+  },
+  btnPassword: {
+    bottom: 5,
+    position: 'absolute',
+    right: 10,
+    width: 25,
   },
 });

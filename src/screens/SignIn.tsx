@@ -6,6 +6,8 @@ import {globalStyles} from '../theme/globalStyles';
 import {size} from '../theme/fonts';
 import Spacer from '../components/atoms/Spacer/Spacer';
 import InputLineLabel from '../components/molecules/InputLineLabel/InputLineLabel';
+import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
+import ButtonText from '../components/atoms/ButtonText/ButtonText';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -28,6 +30,21 @@ const SignIn = () => {
         onChange={setPassword}
         width="100%"
         password
+      />
+      <Spacer vertical={50} />
+      <ButtonAdjustableRadius
+        title="Sign in"
+        radius="circular"
+        onPress={() => console.log('Sign in')}
+        backgroundColor={colors.primary}
+        titleColor={colors.background}
+        width="100%"
+      />
+      <Spacer vertical={15} />
+      <ButtonText
+        title="Forgot Password?"
+        titleColor={colors.primary}
+        onPress={() => console.log('Forgot Password?')}
       />
     </View>
   );

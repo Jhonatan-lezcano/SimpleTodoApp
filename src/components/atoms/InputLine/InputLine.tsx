@@ -28,7 +28,6 @@ const InputLine = ({
   password,
   inputTypes,
 }: Props) => {
-  console.log(password);
   return (
     <TextInput
       placeholder={placeholder}
