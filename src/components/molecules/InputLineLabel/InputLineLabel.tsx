@@ -1,36 +1,46 @@
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {SignUpForm} from '../../../screens/SignUp';
 
 import {colors} from '../../../theme/colors';
 import InputLine, {InputTypes} from '../../atoms/InputLine/InputLine';
+import {size} from '../../../theme/fonts';
 
 interface Props {
-  value: string;
-  onChange: Function;
-  width: string | number;
-  label: string;
+  control: SignUpForm | any;
+  err: any;
   inputTypes?: InputTypes;
+  label: string;
+  name: string;
   password?: boolean;
+  rules?: any;
+  width: string | number;
 }
-
 const InputLineLabel = ({
-  value,
-  onChange,
+  control,
+  err,
+  name,
   width,
   label,
   inputTypes,
   password,
+  rules,
 }: Props) => {
   const [secureText, setSecureText] = useState(password);
   return (
     <View style={{width}}>
       <Text style={styles.label}>{label}</Text>
       <InputLine
-        value={value}
-        onChange={onChange}
         inputTypes={inputTypes}
         password={secureText}
+        control={control}
+        err={err}
+        name={name}
+        rules={rules}
       />
+      <Text style={styles.error}>
+        {err[name] && (err[name]?.message || 'error')}
+      </Text>
       {password && (
         <TouchableOpacity
           style={styles.btnPassword}
@@ -64,8 +74,13 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     paddingBottom: 5,
   },
+  error: {
+    color: colors.tertiary,
+    fontSize: size.font12,
+    height: 16,
+  },
   btnPassword: {
-    bottom: 5,
+    bottom: 25,
     position: 'absolute',
     right: 10,
     width: 25,

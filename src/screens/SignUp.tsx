@@ -16,14 +16,38 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackAuthParams} from '../navigation/StackAuthNavigation';
 import InputLineLabel from '../components/molecules/InputLineLabel/InputLineLabel';
 import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
+import {SubmitHandler, useForm} from 'react-hook-form';
+import {EmailRequired, PasswordRequire} from '../utils/validations';
 
 interface Props
   extends NativeStackScreenProps<RootStackAuthParams, 'signUpScreen'> {}
 
+export interface SignUpForm {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 const SignUp = ({navigation: {navigate}}: Props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+    watch,
+  } = useForm<SignUpForm>({
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
+  const pwd = watch('password');
+
+  const onSubmit: SubmitHandler<SignUpForm> = data => console.log(data);
+  console.log(errors);
 
   return (
     <KeyboardAvoidingView
@@ -44,30 +68,39 @@ const SignUp = ({navigation: {navigate}}: Props) => {
       <Spacer vertical={50} />
       <InputLineLabel
         label="Email"
-        onChange={setEmail}
-        value={email}
         width="100%"
+        control={control}
+        err={errors}
+        name="email"
+        rules={EmailRequired}
+        inputTypes="email-address"
       />
-      <Spacer vertical={27} />
+      <Spacer vertical={10} />
       <InputLineLabel
         label="Password"
-        onChange={setPassword}
-        value={password}
         width="100%"
+        control={control}
+        err={errors}
+        name="password"
         password
+        rules={PasswordRequire}
       />
-      <Spacer vertical={27} />
+      <Spacer vertical={10} />
       <InputLineLabel
         label="Confirm Password"
-        onChange={setConfirmPassword}
-        value={confirmPassword}
         width="100%"
+        control={control}
+        err={errors}
+        name="confirmPassword"
         password
+        rules={{
+          validate: (value: string) => value === pwd || 'Password do not match',
+        }}
       />
       <Spacer vertical={27} />
       <ButtonAdjustableRadius
         title="Sign Up"
-        onPress={() => console.log('sign up with Email')}
+        onPress={handleSubmit(onSubmit)}
         backgroundColor={colors.primary}
         titleColor={colors.background}
       />

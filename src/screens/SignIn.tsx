@@ -3,11 +3,9 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View,
 } from 'react-native';
 import React, {useState} from 'react';
 import {colors} from '../theme/colors';
-import InputLine from '../components/atoms/InputLine/InputLine';
 import {globalStyles} from '../theme/globalStyles';
 import {size} from '../theme/fonts';
 import Spacer from '../components/atoms/Spacer/Spacer';

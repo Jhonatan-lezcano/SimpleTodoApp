@@ -1,6 +1,8 @@
 import {StyleSheet, TextInput} from 'react-native';
 import React from 'react';
 import {colors} from '../../../theme/colors';
+import {SignUpForm} from '../../../screens/SignUp';
+import {Controller} from 'react-hook-form';
 
 export type InputTypes =
   | 'default'
@@ -12,32 +14,49 @@ export type InputTypes =
   | 'url';
 
 interface Props {
+  control: SignUpForm | any;
+  err: any;
+  name: string;
+  rules?: any;
   placeholder?: string;
   width?: string | number;
-  value: string;
-  onChange: Function;
   password?: boolean;
   inputTypes?: InputTypes;
 }
 
 const InputLine = ({
+  control,
+  name,
   placeholder,
   width,
-  value,
-  onChange,
   password,
   inputTypes,
+  rules,
 }: Props) => {
   return (
-    <TextInput
-      placeholder={placeholder}
-      placeholderTextColor={colors.textSecondary}
-      style={[styles.input, {width}]}
-      value={value}
-      onChangeText={text => onChange(text)}
-      selectionColor={colors.primary}
-      keyboardType={inputTypes}
-      secureTextEntry={password}
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({field: {onChange, value, onBlur}, fieldState: {error}}) => (
+        <TextInput
+          placeholder={placeholder}
+          placeholderTextColor={colors.textSecondary}
+          style={[
+            styles.input,
+            {
+              width,
+              borderBottomColor: error ? colors.tertiary : colors.primary,
+            },
+          ]}
+          value={value}
+          onChangeText={onChange}
+          selectionColor={colors.primary}
+          keyboardType={inputTypes}
+          secureTextEntry={password}
+          onBlur={onBlur}
+        />
+      )}
     />
   );
 };
@@ -55,7 +74,6 @@ InputLine.defaultProps = {
 const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
-    borderBottomColor: colors.primary,
     color: colors.primary,
     height: 40,
     paddingHorizontal: 5,
