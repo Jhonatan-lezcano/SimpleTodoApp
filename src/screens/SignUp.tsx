@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {globalStyles} from '../theme/globalStyles';
 import {colors} from '../theme/colors';
 import {size} from '../theme/fonts';
@@ -18,6 +18,7 @@ import InputLineLabel from '../components/molecules/InputLineLabel/InputLineLabe
 import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {EmailRequired, PasswordRequire} from '../utils/validations';
+import {registerUser} from '../firebase/services/login/registerUser';
 
 interface Props
   extends NativeStackScreenProps<RootStackAuthParams, 'signUpScreen'> {}
@@ -29,14 +30,13 @@ export interface SignUpForm {
 }
 
 const SignUp = ({navigation: {navigate}}: Props) => {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: {errors, isSubmitSuccessful},
+    formState,
     watch,
+    reset,
   } = useForm<SignUpForm>({
     defaultValues: {
       email: '',
@@ -46,8 +46,15 @@ const SignUp = ({navigation: {navigate}}: Props) => {
   });
   const pwd = watch('password');
 
-  const onSubmit: SubmitHandler<SignUpForm> = data => console.log(data);
-  console.log(errors);
+  const onSubmit: SubmitHandler<SignUpForm> = data => {
+    console.log(data);
+    registerUser(data);
+  };
+
+  useEffect(() => {
+    if (isSubmitSuccessful)
+      reset({email: '', password: '', confirmPassword: ''});
+  }, [formState]);
 
   return (
     <KeyboardAvoidingView
