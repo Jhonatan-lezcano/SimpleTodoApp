@@ -3,10 +3,9 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {globalStyles} from '../theme/globalStyles';
 import {colors} from '../theme/colors';
 import {size} from '../theme/fonts';
@@ -47,7 +46,6 @@ const SignUp = ({navigation: {navigate}}: Props) => {
   const pwd = watch('password');
 
   const onSubmit: SubmitHandler<SignUpForm> = data => {
-    console.log(data);
     registerUser(data);
   };
 

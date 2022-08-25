@@ -1,10 +1,9 @@
-import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {auth, db} from '../../../../config/firebase';
 import {SignUpForm} from '../../../screens/SignUp';
-// import {methodsFirebase} from '../../../../config/firebase';
+import {methodsFirebase} from '../../../../config/firebase';
 import {UserModel, paramsUser} from '../../models/UserModel';
 
-// const {createUserWithEmailAndPassword, doc, setDoc} = methodsFirebase;
+const {createUserWithEmailAndPassword, doc, setDoc} = methodsFirebase;
 
 export const registerUser = async (data: SignUpForm) => {
   const {email, password} = data;
