@@ -2,16 +2,18 @@ import {auth, methodsFirebase} from '../../../../config/firebase';
 
 const {signInWithEmailAndPassword} = methodsFirebase;
 
-export const signIn = async (data: any, handler: Function) => {
+export const signIn = async (
+  data: any,
+  handler: Function,
+  errorMessage: Function,
+) => {
   const {email, password} = data;
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
     handler();
   } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage);
-    console.log(error);
+    errorMessage('Wrong email or password');
+    console.log(error.message, 'errorrrr');
   }
 };

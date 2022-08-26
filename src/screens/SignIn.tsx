@@ -1,5 +1,5 @@
 import {KeyboardAvoidingView, Platform, StyleSheet, Text} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {colors} from '../theme/colors';
 import {globalStyles} from '../theme/globalStyles';
 import {size} from '../theme/fonts';
@@ -12,6 +12,7 @@ import {EmailRequired, PasswordRequire} from '../utils/validations';
 import {signIn} from '../firebase/services/login/signIn';
 import {useAppDispatch} from '../store/hooks/hooks';
 import {isAuth} from '../store/slices/auth/authSlice';
+import TextMessageError from '../components/atoms/TextMessageError/TextMessageError';
 
 interface SignInForm {
   email: string;
@@ -29,14 +30,17 @@ const SignIn = () => {
       password: '',
     },
   });
+  const [errorSignIn, setErrorSignIn] = useState('');
   const dispatch = useAppDispatch();
 
   const authChange = () => {
     dispatch(isAuth());
   };
 
+  const errorSignInMessage = (message: string) => setErrorSignIn(message);
+
   const onSubmit: SubmitHandler<SignInForm> = data => {
-    signIn(data, authChange);
+    signIn(data, authChange, errorSignInMessage);
   };
   return (
     <KeyboardAvoidingView
@@ -63,7 +67,9 @@ const SignIn = () => {
         err={errors}
         rules={PasswordRequire}
       />
-      <Spacer vertical={50} />
+      <Spacer vertical={18} />
+      <TextMessageError message={errorSignIn} />
+      <Spacer vertical={34} />
       <ButtonAdjustableRadius
         title="Sign in"
         radius="circular"

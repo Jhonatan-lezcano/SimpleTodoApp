@@ -5,6 +5,7 @@ import {SignUpForm} from '../../../screens/SignUp';
 import {colors} from '../../../theme/colors';
 import InputLine, {InputTypes} from '../../atoms/InputLine/InputLine';
 import {size} from '../../../theme/fonts';
+import TextMessageError from '../../atoms/TextMessageError/TextMessageError';
 
 interface Props {
   control: SignUpForm | any;
@@ -38,9 +39,9 @@ const InputLineLabel = ({
         name={name}
         rules={rules}
       />
-      <Text style={styles.error}>
-        {err[name] && (err[name]?.message || 'error')}
-      </Text>
+      <TextMessageError
+        message={err[name] && (err[name]?.message || 'error')}
+      />
       {password && (
         <TouchableOpacity
           style={styles.btnPassword}
