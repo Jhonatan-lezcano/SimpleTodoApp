@@ -9,17 +9,20 @@ import {getUser} from '../store/slices/user/userSlice';
 import {globalStyles} from '../theme/globalStyles';
 import Title from '../components/atoms/Title/Title';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import SliderList from '../components/organisms/SliderList/SliderList';
+import AddList from '../components/molecules/AddList/AddList';
+import Spacer from '../components/atoms/Spacer/Spacer';
 
 const Home = () => {
   const dispatch = useAppDispatch();
+  const {listData} = useAppSelector(state => state.todoList);
   // const {id} = useAppSelector(state => state.user);
-  useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        dispatch(getUser({id: user.uid}));
-      }
-    });
-  }, []);
+
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      dispatch(getUser({id: user.uid}));
+    }
+  });
 
   return (
     <SafeAreaView
@@ -29,7 +32,16 @@ const Home = () => {
         translucent={true}
         barStyle="dark-content"
       />
+
       <Title title="Simple" secondWord="TodoList" divider />
+
+      <Spacer vertical={48} />
+
+      <AddList />
+
+      <Spacer vertical={48} />
+
+      <SliderList boxes={listData} />
     </SafeAreaView>
   );
 };
