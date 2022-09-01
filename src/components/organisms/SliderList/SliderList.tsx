@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native';
+import {FlatList, StyleSheet, View, Dimensions} from 'react-native';
 import {List} from '../../../store/slices/todoList/todoListSlice';
 import ItemSlider from '../../molecules/ItemSlider/ItemSlider';
 
@@ -23,6 +16,7 @@ const SliderList = ({boxes}: Props) => {
         data={boxes}
         keyExtractor={item => item.id}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
         renderItem={({item, index}) => {
           return <ItemSlider listData={item} index={index} />;
         }}
@@ -38,5 +32,4 @@ const styles = StyleSheet.create({
     height: 310,
     width,
   },
-  //styles ItemSlider
 });

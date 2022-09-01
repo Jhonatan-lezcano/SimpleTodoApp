@@ -3,8 +3,14 @@ import React from 'react';
 import ButtonPlus from '../../atoms/ButtonPlus/ButtonPlus';
 import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackAppParams} from '../../../navigation/StackAppNavigation';
 
-const AddList = () => {
+interface Props {
+  navigate: Function;
+}
+
+const AddList = ({navigate}: Props) => {
   return (
     <View>
       <ButtonPlus
@@ -12,7 +18,7 @@ const AddList = () => {
         borderColor={colors.secondary}
         sizePlus={size.font18}
         padding={16}
-        onPress={() => console.log('add list')}
+        onPress={() => navigate()}
       />
       <Text style={styles.addText}>Add List</Text>
     </View>
