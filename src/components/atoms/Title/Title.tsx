@@ -8,9 +8,10 @@ interface Props {
   textAlign?: 'center' | 'auto' | 'left' | 'right' | 'justify' | undefined;
   secondWord?: string;
   divider?: boolean;
+  fontSize: number;
 }
 
-const Title = ({title, secondWord, divider, textAlign}: Props) => {
+const Title = ({title, secondWord, divider, textAlign, fontSize}: Props) => {
   return (
     <View style={styles.container}>
       {divider && <View style={styles.divider} />}
@@ -18,6 +19,7 @@ const Title = ({title, secondWord, divider, textAlign}: Props) => {
         style={[
           styles.title,
           {
+            fontSize,
             textAlign: textAlign,
             width: !divider ? '100%' : 'auto',
           },
@@ -44,7 +46,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.text,
-    fontSize: size.font34,
     fontWeight: 'bold',
     paddingHorizontal: 20,
   },

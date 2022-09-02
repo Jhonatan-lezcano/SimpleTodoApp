@@ -17,6 +17,7 @@ import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import ButtonMenu from '../components/atoms/ButtonMenu/ButtonMenu';
 import MenuOptions from '../components/molecules/MenuOptions/MenuOptions';
 import Menu from '../components/organisms/Menu/Menu';
+import {size} from '../theme/fonts';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'homeScreen'> {}
@@ -41,7 +42,12 @@ const Home = ({navigation: {navigate}}: Props) => {
         barStyle="dark-content"
       />
 
-      <Title title="Simple" secondWord="TodoList" divider />
+      <Title
+        title="Simple"
+        secondWord="TodoList"
+        divider
+        fontSize={size.font34}
+      />
 
       <Spacer vertical={48} />
 

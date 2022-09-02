@@ -3,7 +3,7 @@ import {SignUpForm} from '../../../screens/SignUp';
 import {methodsFirebase} from '../../../../config/firebase';
 import {UserModel, paramsUser} from '../../models/UserModel';
 
-const {createUserWithEmailAndPassword, doc, setDoc} = methodsFirebase;
+const {createUserWithEmailAndPassword} = methodsFirebase;
 
 export const registerUser = async (data: SignUpForm) => {
   const {email, password} = data;
