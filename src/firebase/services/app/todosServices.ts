@@ -1,4 +1,4 @@
-import {collection, addDoc} from 'firebase/firestore';
+import {collection, addDoc, doc, setDoc} from 'firebase/firestore';
 import {db} from '../../../../config/firebase';
 
 interface list {
@@ -10,6 +10,8 @@ interface list {
 export const createList = async (data: list) => {
   console.log(data);
 
-  await addDoc(collection(db, 'Lists'), data);
+  // console.log(db.app);
+  const newList = doc(collection(db, 'Lists'));
+  await setDoc(newList, data);
   console.log('List created successfully');
 };

@@ -1811,6 +1811,11 @@
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
+"@react-native-firebase/firestore@^15.4.0":
+  version "15.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-15.4.0.tgz#9941cc2e256a11c1ea0d7614776fae54ed3a17d0"
+  integrity sha512-7Kiqn9c4uzQyURFQ4LGCZ4waeZb/hZb/IWl6MlpfkCtII9PnpdqbvQwEKKKg8RQMocP5sbw0qPsKEdYEYUNKhg==
+
 "@react-native-picker/picker@^2.4.4":
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.4.tgz#4e4d2ec4b040e24d8b99c6be8f8b3201bb29fad3"
