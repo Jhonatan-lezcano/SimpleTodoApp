@@ -10,9 +10,9 @@ interface Props {
 }
 
 const ItemSlider = ({listData, index}: Props) => {
-  const {name, color, todos} = listData;
-  const completed = todos.filter(todo => todo.completed).length;
-  const pending = todos.length - completed;
+  const {name, color} = listData;
+  const completed = 0;
+  const pending = 0;
   return (
     <View
       style={[

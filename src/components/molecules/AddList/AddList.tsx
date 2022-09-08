@@ -7,7 +7,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackAppParams} from '../../../navigation/StackAppNavigation';
 
 interface Props {
-  navigate: Function;
+  navigate: () => void;
 }
 
 const AddList = ({navigate}: Props) => {
@@ -18,7 +18,7 @@ const AddList = ({navigate}: Props) => {
         borderColor={colors.secondary}
         sizePlus={size.font18}
         padding={16}
-        onPress={() => navigate()}
+        onPress={navigate}
       />
       <Text style={styles.addText}>Add List</Text>
     </View>

@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {startAfter} from 'firebase/firestore';
 
 export interface Todo {
   id: string;
@@ -6,138 +7,41 @@ export interface Todo {
   completed: boolean;
 }
 
-export interface ListData {
-  listData: List[];
-}
-
 export interface List {
   id: string;
+  idUser: string;
   name: string;
   color: string;
-  todos: Todo[];
 }
 
-const initialState: ListData = {
-  listData: [
-    {
-      id: '1',
-      name: 'plan to travel tomorrow',
-      color: '#24A6D9',
-      todos: [
-        {
-          id: '1',
-          title: 'Book Flight',
-          completed: false,
-        },
-        {
-          id: '2',
-          title: 'Book Flight',
-          completed: false,
-        },
-        {
-          id: '3',
-          title: 'Book Flight',
-          completed: false,
-        },
-        {
-          id: '4',
-          title: 'Book Flight',
-          completed: false,
-        },
-      ],
-    },
-    {
-      id: '2',
-      name: 'Shopping List',
-      color: '#8022D9',
-      todos: [
-        {
-          id: '1',
-          title: 'Book Flight',
-          completed: true,
-        },
-        {
-          id: '2',
-          title: 'Book Flight',
-          completed: false,
-        },
-        {
-          id: '3',
-          title: 'Book Flight',
-          completed: false,
-        },
-        {
-          id: '4',
-          title: 'Book Flight',
-          completed: false,
-        },
-      ],
-    },
-    {
-      id: '3',
-      name: 'Worked',
-      color: '#24A6D9',
-      todos: [
-        {
-          id: '1',
-          title: 'Book Flight',
-          completed: true,
-        },
-        {
-          id: '2',
-          title: 'Book Flight',
-          completed: true,
-        },
-        {
-          id: '3',
-          title: 'Book Flight',
-          completed: false,
-        },
-        {
-          id: '4',
-          title: 'Book Flight',
-          completed: false,
-        },
-      ],
-    },
-    {
-      id: '4',
-      name: 'Study',
-      color: '#8022D9',
-      todos: [
-        {
-          id: '1',
-          title: 'Book Flight',
-          completed: true,
-        },
-        {
-          id: '2',
-          title: 'Book Flight',
-          completed: true,
-        },
-        {
-          id: '3',
-          title: 'Book Flight',
-          completed: true,
-        },
-        {
-          id: '4',
-          title: 'Book Flight',
-          completed: false,
-        },
-      ],
-    },
-  ],
+interface StateType {
+  isLoading: boolean;
+  listData: List[];
+  todosData: Todo[];
+}
+
+const initialState: StateType = {
+  isLoading: false,
+  listData: [],
+  todosData: [],
 };
 
 export const todoListSlice = createSlice({
   name: 'todoList',
   initialState,
   reducers: {
-    prueba: state => console.log(state),
+    getArrayList: (state, action) => {
+      return {...state, listData: action.payload};
+    },
+    loading: (state, action) => {
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
+    },
   },
 });
 
-export const {prueba} = todoListSlice.actions;
+export const {getArrayList, loading} = todoListSlice.actions;
 
 export default todoListSlice.reducer;

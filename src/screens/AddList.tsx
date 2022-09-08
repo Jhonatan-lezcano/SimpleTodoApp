@@ -12,9 +12,14 @@ import useColorPalettes from '../hooks/useColorPalettes';
 import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
 import {createList} from '../firebase/services/app/todosServices';
 import {useAppSelector} from '../store/hooks/hooks';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackAppParams} from '../navigation/StackAppNavigation';
 
-const AddList = () => {
-  const [name, setNameList] = useState('');
+interface Props
+  extends NativeStackScreenProps<RootStackAppParams, 'addListScreen'> {}
+
+const AddList = ({navigation: {navigate}}: Props) => {
+  const [name, setName] = useState('');
   const {selected, changeSelected, palette, changeColor, color} =
     useColorPalettes();
   const {id} = useAppSelector(state => state.user);
@@ -23,6 +28,7 @@ const AddList = () => {
     if (name === '') return console.log('este campo no puede estar vacio');
 
     createList({idUser: id, name, color});
+    navigate('homeScreen');
   };
 
   return (
@@ -34,11 +40,7 @@ const AddList = () => {
           textAlign="center"
         />
         <Spacer vertical={20} />
-        <InputBorder
-          placeHolder="List name?"
-          value={name}
-          onChange={setNameList}
-        />
+        <InputBorder placeHolder="List name?" value={name} onChange={setName} />
         <Spacer vertical={20} />
         <Picker
           selectedValue={selected}

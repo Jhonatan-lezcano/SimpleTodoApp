@@ -3,12 +3,12 @@ import React from 'react';
 import {colors} from '../../../theme/colors';
 
 interface Props {
-  onPress: Function;
+  onPress: () => void;
 }
 
 const ButtonMenu = ({onPress}: Props) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={() => onPress()}>
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <View style={styles.Dot} />
       <View style={styles.Dot} />
       <View style={styles.Dot} />

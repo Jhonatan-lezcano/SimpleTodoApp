@@ -7,7 +7,7 @@ interface Props {
   borderColor?: string;
   sizePlus: number;
   padding: number;
-  onPress: Function;
+  onPress: () => void;
 }
 
 const ButtonPlus = ({
@@ -20,7 +20,7 @@ const ButtonPlus = ({
 }: Props) => {
   return (
     <TouchableOpacity
-      onPress={() => onPress()}
+      onPress={onPress}
       style={[
         styles.button,
         {

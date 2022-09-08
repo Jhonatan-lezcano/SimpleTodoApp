@@ -6,7 +6,7 @@ import {size} from '../../../theme/fonts';
 interface Props {
   radius: 'circular' | 'semicircular';
   title: string;
-  onPress: Function;
+  onPress: () => void;
   width: string | number;
   shadow?: boolean;
   backgroundColor: string;
@@ -44,7 +44,7 @@ const ButtonAdjustableRadius = ({
           width,
         },
       ]}
-      onPress={() => onPress()}>
+      onPress={onPress}>
       <Text style={[styles.text, {color: titleColor}]}>{title}</Text>
     </TouchableOpacity>
   );
