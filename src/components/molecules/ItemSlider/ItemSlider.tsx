@@ -7,9 +7,10 @@ import {size} from '../../../theme/fonts';
 interface Props {
   listData: List;
   index: number;
+  navigate: Function;
 }
 
-const ItemSlider = ({listData, index}: Props) => {
+const ItemSlider = ({listData, index, navigate}: Props) => {
   const {name, color} = listData;
   const completed = 0;
   const pending = 0;
@@ -23,7 +24,17 @@ const ItemSlider = ({listData, index}: Props) => {
       ]}>
       <TouchableOpacity
         style={[styles.list, {backgroundColor: color}]}
-        onPress={() => console.log(index)}>
+        onPress={() =>
+          navigate(
+            {
+              id: 1,
+              idList: listData.id,
+              title: 'algo',
+              completed: false,
+            },
+            listData,
+          )
+        }>
         <Text style={[styles.listTitle, styles.textColor]} numberOfLines={1}>
           {name}
         </Text>

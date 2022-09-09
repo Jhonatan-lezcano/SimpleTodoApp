@@ -7,11 +7,12 @@ import ItemSlider from '../../molecules/ItemSlider/ItemSlider';
 interface Props {
   boxes: List[];
   loading: boolean;
+  navigate: Function;
 }
 
 const {width} = Dimensions.get('screen');
 
-const SliderList = ({boxes, loading}: Props) => {
+const SliderList = ({boxes, loading, navigate}: Props) => {
   return (
     <View style={styles.sliderContainer}>
       {!loading ? (
@@ -21,7 +22,9 @@ const SliderList = ({boxes, loading}: Props) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({item, index}) => {
-            return <ItemSlider listData={item} index={index} />;
+            return (
+              <ItemSlider listData={item} index={index} navigate={navigate} />
+            );
           }}
         />
       ) : (

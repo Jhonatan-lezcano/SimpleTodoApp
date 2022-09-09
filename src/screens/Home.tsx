@@ -17,6 +17,7 @@ import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import Menu from '../components/organisms/Menu/Menu';
 import {size} from '../theme/fonts';
 import {getLists} from '../firebase/services/app/todosServices';
+import {Todo} from '../store/slices/todoList/todoListSlice';
 import {
   getArrayList,
   List,
@@ -46,6 +47,9 @@ const Home = ({navigation: {navigate}}: Props) => {
   console.log(isLoading, 'list data');
   const navigateAddList = () => navigate('addListScreen');
 
+  const navigateAddTodo = (TodoData: Todo, ListData: List) =>
+    navigate('addTodoScreen', {TodoData, ListData});
+
   return (
     <SafeAreaView
       style={[globalStyles.container, {marginTop: StatusBar.currentHeight}]}>
@@ -68,7 +72,11 @@ const Home = ({navigation: {navigate}}: Props) => {
 
       <Spacer vertical={48} />
 
-      <SliderList boxes={listData} loading={isLoading} />
+      <SliderList
+        boxes={listData}
+        loading={isLoading}
+        navigate={navigateAddTodo}
+      />
       <Menu />
     </SafeAreaView>
   );

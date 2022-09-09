@@ -1,8 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {startAfter} from 'firebase/firestore';
 
 export interface Todo {
   id: string;
+  idList: string;
   title: string;
   completed: boolean;
 }
