@@ -13,64 +13,56 @@ import {colors} from '../theme/colors';
 import InputBorder from '../components/atoms/InputBorder/InputBorder';
 import ButtonPlus from '../components/atoms/ButtonPlus/ButtonPlus';
 import {globalStyles} from '../theme/globalStyles';
-import Todo from '../components/atoms/Todo/Todo';
+import {createTodo} from '../firebase/services/app/todosServices';
+import Todos from '../components/atoms/Todo/Todo';
+import useTodoList from '../hooks/useTodoList';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
 
-const mockTodos = [
-  {
-    id: 1,
-    title: 'Book Flight',
-    complete: false,
-  },
-  {
-    id: 2,
-    title: 'Book Flight',
-    complete: true,
-  },
-  {
-    id: 3,
-    title: 'Book Flight',
-    complete: false,
-  },
-  {
-    id: 4,
-    title: 'Book Flight',
-    complete: false,
-  },
-];
-
 const AddTodo = ({route}: Props) => {
-  const [newTodo, setNewTodo] = useState('');
+  const [title, setTitle] = useState('');
+  const {todosData} = useTodoList();
   const {
-    ListData: {color, name},
+    ListData: {color, name, id, idUser},
   } = route.params;
-  console.log(route.params);
+  const todos = todosData.filter(item => item.idList === id);
+  const tasks = todos.length;
+  const tasksCompleted = todos.filter(item => item.completed).length;
+
+  const onSubmit = () => {
+    if (title === '') return console.log('este campo no puede estar vacio');
+
+    createTodo({idUser, title, completed: false, idList: id});
+    setTitle('');
+  };
+
   return (
     <View style={[globalStyles.container]}>
       <View style={[styles.section, styles.header, {borderColor: color}]}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.taskCount}>1/3</Text>
+        <Text style={styles.taskCount}>
+          {tasksCompleted}/{tasks}
+        </Text>
       </View>
 
       <View style={[styles.section, {flex: 3}]}>
         <FlatList
-          data={mockTodos}
+          data={todos}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => <Todo todo={item} />}
+          renderItem={({item}) => <Todos todo={item} />}
           contentContainerStyle={{paddingHorizontal: 32, paddingVertical: 60}}
         />
       </View>
       <KeyboardAvoidingView style={[styles.section, styles.footer]}>
         <InputBorder
           placeHolder="New todo"
-          onChange={setNewTodo}
-          value={newTodo}
+          onChange={setTitle}
+          value={title}
           style={{flex: 1, marginRight: 10}}
         />
         <ButtonPlus
-          onPress={() => console.log('nueva tarea')}
+          onPress={() => onSubmit()}
           padding={12}
           sizePlus={size.font16}
           background={color}

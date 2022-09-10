@@ -7,7 +7,6 @@ import {Todo, List} from '../store/slices/todoList/todoListSlice';
 
 interface PropsAddTodo {
   ListData: List;
-  TodoData: Todo;
 }
 
 export type RootStackAppParams = {

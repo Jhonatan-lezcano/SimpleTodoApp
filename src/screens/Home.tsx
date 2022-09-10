@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useAppDispatch, useAppSelector} from '../store/hooks/hooks';
@@ -16,21 +16,16 @@ import Spacer from '../components/atoms/Spacer/Spacer';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import Menu from '../components/organisms/Menu/Menu';
 import {size} from '../theme/fonts';
-import {getLists} from '../firebase/services/app/todosServices';
 import {Todo} from '../store/slices/todoList/todoListSlice';
-import {
-  getArrayList,
-  List,
-  loading,
-} from '../store/slices/todoList/todoListSlice';
+import {List} from '../store/slices/todoList/todoListSlice';
+import useTodoList from '../hooks/useTodoList';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'homeScreen'> {}
 
 const Home = ({navigation: {navigate}}: Props) => {
   const dispatch = useAppDispatch();
-  const {listData, isLoading} = useAppSelector(state => state.todoList);
-  const {id} = useAppSelector(state => state.user);
+  const {listData, isLoading, todosData} = useTodoList();
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -40,15 +35,10 @@ const Home = ({navigation: {navigate}}: Props) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log('first');
-    getLists(id, dispatch, getArrayList);
-  }, [id]);
-  console.log(isLoading, 'list data');
   const navigateAddList = () => navigate('addListScreen');
 
-  const navigateAddTodo = (TodoData: Todo, ListData: List) =>
-    navigate('addTodoScreen', {TodoData, ListData});
+  const navigateAddTodo = (ListData: List) =>
+    navigate('addTodoScreen', {ListData});
 
   return (
     <SafeAreaView
@@ -76,6 +66,7 @@ const Home = ({navigation: {navigate}}: Props) => {
         boxes={listData}
         loading={isLoading}
         navigate={navigateAddTodo}
+        todos={todosData}
       />
       <Menu />
     </SafeAreaView>

@@ -18,13 +18,12 @@ export const Options: OptionsType[] = [
   {
     option: 'Sign out',
     icon: '',
-    onPress: async (dispatch: AppDispatch) => {
-      try {
-        await signOut(auth);
-        dispatch(isAuth());
-      } catch (error) {
-        console.log(error);
-      }
+    onPress: (dispatch: AppDispatch) => {
+      signOut(auth)
+        .then(() => {
+          dispatch(isAuth());
+        })
+        .catch(error => console.log(error));
     },
   },
 ];

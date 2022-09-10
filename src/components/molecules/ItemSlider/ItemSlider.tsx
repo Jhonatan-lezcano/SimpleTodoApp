@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {List} from '../../../store/slices/todoList/todoListSlice';
+import {List, Todo} from '../../../store/slices/todoList/todoListSlice';
 import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
 
@@ -8,12 +8,15 @@ interface Props {
   listData: List;
   index: number;
   navigate: Function;
+  todos: Todo[];
 }
 
-const ItemSlider = ({listData, index, navigate}: Props) => {
-  const {name, color} = listData;
-  const completed = 0;
-  const pending = 0;
+const ItemSlider = ({listData, index, navigate, todos}: Props) => {
+  const {name, color, id} = listData;
+  const todosInfo = todos.filter(item => item.idList === id);
+  const completed = todosInfo.filter(item => item.completed).length;
+  const pending = todosInfo.length - completed;
+
   return (
     <View
       style={[
@@ -24,17 +27,7 @@ const ItemSlider = ({listData, index, navigate}: Props) => {
       ]}>
       <TouchableOpacity
         style={[styles.list, {backgroundColor: color}]}
-        onPress={() =>
-          navigate(
-            {
-              id: 1,
-              idList: listData.id,
-              title: 'algo',
-              completed: false,
-            },
-            listData,
-          )
-        }>
+        onPress={() => navigate(listData)}>
         <Text style={[styles.listTitle, styles.textColor]} numberOfLines={1}>
           {name}
         </Text>

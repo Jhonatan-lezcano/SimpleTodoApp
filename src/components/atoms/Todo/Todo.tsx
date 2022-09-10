@@ -1,20 +1,21 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Todo} from '../../../store/slices/todoList/todoListSlice';
 import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
 import Spacer from '../Spacer/Spacer';
 
 interface Props {
-  todo: any;
+  todo: Todo;
 }
 
-const Todo = ({todo: {title, complete}}: Props) => {
+const Todos = ({todo: {title, completed}}: Props) => {
   return (
     <View style={styles.todoContainer}>
       <TouchableOpacity>
         <View
           style={{
-            backgroundColor: complete
+            backgroundColor: completed
               ? colors.textSecondary
               : colors.background,
             borderWidth: 1,
@@ -28,8 +29,8 @@ const Todo = ({todo: {title, complete}}: Props) => {
         style={[
           styles.title,
           {
-            color: complete ? colors.textSecondary : colors.black,
-            textDecorationLine: complete ? 'line-through' : 'none',
+            color: completed ? colors.textSecondary : colors.black,
+            textDecorationLine: completed ? 'line-through' : 'none',
           },
         ]}>
         {title}
@@ -38,7 +39,7 @@ const Todo = ({todo: {title, complete}}: Props) => {
   );
 };
 
-export default Todo;
+export default Todos;
 
 const styles = StyleSheet.create({
   todoContainer: {

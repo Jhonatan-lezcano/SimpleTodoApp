@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, View, Dimensions, Text} from 'react-native';
-import {List} from '../../../store/slices/todoList/todoListSlice';
+import {List, Todo} from '../../../store/slices/todoList/todoListSlice';
 import {colors} from '../../../theme/colors';
 import ItemSlider from '../../molecules/ItemSlider/ItemSlider';
 
@@ -8,11 +8,12 @@ interface Props {
   boxes: List[];
   loading: boolean;
   navigate: Function;
+  todos: Todo[];
 }
 
 const {width} = Dimensions.get('screen');
 
-const SliderList = ({boxes, loading, navigate}: Props) => {
+const SliderList = ({boxes, loading, navigate, todos}: Props) => {
   return (
     <View style={styles.sliderContainer}>
       {!loading ? (
@@ -23,7 +24,12 @@ const SliderList = ({boxes, loading, navigate}: Props) => {
           showsHorizontalScrollIndicator={false}
           renderItem={({item, index}) => {
             return (
-              <ItemSlider listData={item} index={index} navigate={navigate} />
+              <ItemSlider
+                listData={item}
+                index={index}
+                navigate={navigate}
+                todos={todos}
+              />
             );
           }}
         />
