@@ -7,12 +7,14 @@ import {
   where,
   onSnapshot,
   orderBy,
+  updateDoc,
 } from 'firebase/firestore';
 import {db} from '../../../../config/firebase';
 import {
   getArrayList,
   getArrayTodos,
   loading,
+  Todo,
 } from '../../../store/slices/todoList/todoListSlice';
 import {AppDispatch} from '../../../store/store';
 
@@ -42,7 +44,7 @@ export const createList = async (data: list) => {
 export const getLists = (idUser: string, dispatch: AppDispatch) => {
   dispatch(loading(true));
   const q = query(collection(db, 'Lists'), where('idUser', '==', idUser));
-  onSnapshot(q, querySnapshot => {
+  const unsuscribe = onSnapshot(q, querySnapshot => {
     const lists: list[] = [];
     querySnapshot.forEach(doc => {
       lists.push({
@@ -67,7 +69,7 @@ export const createTodo = async (data: todos) => {
 
 export const getTodos = (idUser: string, dispatch: AppDispatch) => {
   const q = query(collection(db, 'Todos'), where('idUser', '==', idUser));
-  onSnapshot(q, querySnapshot => {
+  const unsuscribe = onSnapshot(q, querySnapshot => {
     const todos: todos[] = [];
     querySnapshot.forEach(doc => {
       todos.push({
@@ -79,5 +81,13 @@ export const getTodos = (idUser: string, dispatch: AppDispatch) => {
       });
     });
     dispatch(getArrayTodos(todos));
+  });
+};
+
+export const updateTodosPerId = async (data: Todo) => {
+  console.log(data.id);
+  const todoRef = doc(db, 'Todos', data.id);
+  await updateDoc(todoRef, {
+    completed: !data.completed,
   });
 };

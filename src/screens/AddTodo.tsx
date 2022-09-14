@@ -16,13 +16,14 @@ import {globalStyles} from '../theme/globalStyles';
 import {createTodo} from '../firebase/services/app/todosServices';
 import Todos from '../components/atoms/Todo/Todo';
 import useTodoList from '../hooks/useTodoList';
+import useTodo from '../hooks/useTodo';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
 
 const AddTodo = ({route}: Props) => {
   const [title, setTitle] = useState('');
-  const {todosData} = useTodoList();
+  const {todosData, updateTodo} = useTodo();
   const {
     ListData: {color, name, id, idUser},
   } = route.params;
@@ -50,7 +51,7 @@ const AddTodo = ({route}: Props) => {
         <FlatList
           data={todos}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => <Todos todo={item} />}
+          renderItem={({item}) => <Todos todo={item} updateTodo={updateTodo} />}
           contentContainerStyle={{paddingHorizontal: 32, paddingVertical: 60}}
         />
       </View>

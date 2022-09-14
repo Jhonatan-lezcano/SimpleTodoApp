@@ -17,8 +17,7 @@ export const userSlice = createSlice({
     getUser: (state, action) => {
       return {
         ...state,
-        loading: false,
-        ...action.payload,
+        id: action.payload,
       };
     },
   },

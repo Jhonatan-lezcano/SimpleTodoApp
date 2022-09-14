@@ -7,12 +7,14 @@ import Spacer from '../Spacer/Spacer';
 
 interface Props {
   todo: Todo;
+  updateTodo: (data: Todo) => void;
 }
 
-const Todos = ({todo: {title, completed}}: Props) => {
+const Todos = ({todo, updateTodo}: Props) => {
+  const {title, completed} = todo;
   return (
     <View style={styles.todoContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => updateTodo(todo)}>
         <View
           style={{
             backgroundColor: completed
@@ -43,7 +45,7 @@ export default Todos;
 
 const styles = StyleSheet.create({
   todoContainer: {
-    paddingVertical: 10,
+    paddingVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
   },

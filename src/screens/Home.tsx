@@ -16,23 +16,28 @@ import Spacer from '../components/atoms/Spacer/Spacer';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import Menu from '../components/organisms/Menu/Menu';
 import {size} from '../theme/fonts';
-import {Todo} from '../store/slices/todoList/todoListSlice';
 import {List} from '../store/slices/todoList/todoListSlice';
 import useTodoList from '../hooks/useTodoList';
+import useTodo from '../hooks/useTodo';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'homeScreen'> {}
 
 const Home = ({navigation: {navigate}}: Props) => {
   const dispatch = useAppDispatch();
-  const {listData, isLoading, todosData} = useTodoList();
+  const {listData, isLoading} = useTodoList();
+  const {todosData} = useTodo();
+  const {id} = useAppSelector(state => state.user);
+  const algo = 'algo';
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
-      if (user) {
-        dispatch(getUser({id: user.uid}));
+      if (user && id === '') {
+        console.log('se ejecuta');
+        dispatch(getUser(user.uid));
       }
     });
+    console.log('first');
   }, []);
 
   const navigateAddList = () => navigate('addListScreen');
