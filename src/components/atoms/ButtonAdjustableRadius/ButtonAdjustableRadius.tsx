@@ -4,7 +4,7 @@ import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
 
 interface Props {
-  radius: 'circular' | 'semicircular';
+  radius: 'circular' | 'semicircular' | 'straight';
   title: string;
   onPress: () => void;
   width: string | number;
@@ -39,7 +39,8 @@ const ButtonAdjustableRadius = ({
         styles.button,
         shadow && shadowButton,
         {
-          borderRadius: radius === 'circular' ? 30 : 10,
+          borderRadius:
+            radius === 'circular' ? 30 : radius === 'semicircular' ? 10 : 0,
           backgroundColor,
           width,
         },

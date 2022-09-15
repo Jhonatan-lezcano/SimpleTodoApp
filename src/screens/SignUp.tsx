@@ -47,6 +47,7 @@ const SignUp = ({navigation: {navigate}}: Props) => {
 
   const onSubmit: SubmitHandler<SignUpForm> = data => {
     registerUser(data);
+    navigate('signInScreen');
   };
 
   useEffect(() => {

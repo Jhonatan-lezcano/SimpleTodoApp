@@ -15,8 +15,8 @@ import ButtonPlus from '../components/atoms/ButtonPlus/ButtonPlus';
 import {globalStyles} from '../theme/globalStyles';
 import {createTodo} from '../firebase/services/app/todosServices';
 import Todos from '../components/atoms/Todo/Todo';
-import useTodoList from '../hooks/useTodoList';
 import useTodo from '../hooks/useTodo';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
@@ -47,14 +47,14 @@ const AddTodo = ({route}: Props) => {
         </Text>
       </View>
 
-      <View style={[styles.section, {flex: 3}]}>
+      <GestureHandlerRootView style={[styles.section, {flex: 3}]}>
         <FlatList
           data={todos}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => <Todos todo={item} updateTodo={updateTodo} />}
-          contentContainerStyle={{paddingHorizontal: 32, paddingVertical: 60}}
+          contentContainerStyle={{paddingVertical: 60}}
         />
-      </View>
+      </GestureHandlerRootView>
       <KeyboardAvoidingView style={[styles.section, styles.footer]}>
         <InputBorder
           placeHolder="New todo"
