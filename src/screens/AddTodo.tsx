@@ -23,7 +23,7 @@ interface Props
 
 const AddTodo = ({route}: Props) => {
   const [title, setTitle] = useState('');
-  const {todosData, updateTodo} = useTodo();
+  const {todosData, updateTodo, deleteTodo} = useTodo();
   const {
     ListData: {color, name, id, idUser},
   } = route.params;
@@ -51,7 +51,13 @@ const AddTodo = ({route}: Props) => {
         <FlatList
           data={todos}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => <Todos todo={item} updateTodo={updateTodo} />}
+          renderItem={({item}) => (
+            <Todos
+              todo={item}
+              updateTodo={updateTodo}
+              deleteTodo={deleteTodo}
+            />
+          )}
           contentContainerStyle={{paddingVertical: 60}}
         />
       </GestureHandlerRootView>

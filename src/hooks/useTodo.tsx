@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {
+  deleteTodoService,
   getTodos,
   updateTodosPerId,
 } from '../firebase/services/app/todosServices';
@@ -19,7 +20,9 @@ const useTodo = () => {
     updateTodosPerId(data);
   };
 
-  return {todosData, updateTodo};
+  const deleteTodo = (id: string) => deleteTodoService(id);
+
+  return {todosData, updateTodo, deleteTodo};
 };
 
 export default useTodo;

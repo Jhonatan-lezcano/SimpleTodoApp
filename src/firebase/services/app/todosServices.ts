@@ -8,6 +8,7 @@ import {
   onSnapshot,
   orderBy,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import {db} from '../../../../config/firebase';
 import {
@@ -85,9 +86,13 @@ export const getTodos = (idUser: string, dispatch: AppDispatch) => {
 };
 
 export const updateTodosPerId = async (data: Todo) => {
-  console.log(data.id);
   const todoRef = doc(db, 'Todos', data.id);
   await updateDoc(todoRef, {
     completed: !data.completed,
   });
+};
+
+export const deleteTodoService = async (id: string) => {
+  const todoRef = doc(db, 'Todos', id);
+  await deleteDoc(todoRef);
 };

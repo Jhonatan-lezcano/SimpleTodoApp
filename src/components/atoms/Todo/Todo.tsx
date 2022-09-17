@@ -9,7 +9,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import ButtonAdjustableRadius from '../ButtonAdjustableRadius/ButtonAdjustableRadius';
 
 const rightActions = (
-  onDeleteHandler: Function,
+  onDeleteHandler: () => void,
   progress: Animated.AnimatedInterpolation,
 ) => {
   const opacity = progress.interpolate({
@@ -18,14 +18,13 @@ const rightActions = (
     extrapolate: 'clamp',
   });
 
-  console.log(progress);
   return (
     <Animated.View style={{opacity}}>
       <ButtonAdjustableRadius
         radius="straight"
         backgroundColor={colors.tertiary}
         title="Delete"
-        onPress={() => onDeleteHandler()}
+        onPress={onDeleteHandler}
         width={80}
         titleColor={colors.background}
       />
@@ -36,19 +35,18 @@ const rightActions = (
 interface Props {
   todo: Todo;
   updateTodo: (data: Todo) => void;
+  deleteTodo: (id: string) => void;
 }
 
-const Todos = ({todo, updateTodo}: Props) => {
+const Todos = ({todo, updateTodo, deleteTodo}: Props) => {
   const {title, completed, id} = todo;
 
-  const deleteTodo = () => {
-    console.log(id);
-  };
+  const onDeleteHandler = () => deleteTodo(id);
 
   return (
     <Swipeable
       renderRightActions={(dragX, progress) =>
-        rightActions(deleteTodo, progress)
+        rightActions(onDeleteHandler, progress)
       }>
       <View style={styles.todoContainer}>
         <TouchableOpacity onPress={() => updateTodo(todo)}>
