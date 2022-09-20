@@ -17,6 +17,8 @@ import {createTodo} from '../firebase/services/app/todosServices';
 import Todos from '../components/atoms/Todo/Todo';
 import useTodo from '../hooks/useTodo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import Menu from '../components/organisms/Menu/Menu';
+import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
@@ -76,6 +78,12 @@ const AddTodo = ({route}: Props) => {
           colorPlus="white"
         />
       </KeyboardAvoidingView>
+      <Menu>
+        <ItemMenuOption
+          textOption="Delete list"
+          actionOption={() => console.log('Delete list')}
+        />
+      </Menu>
     </View>
   );
 };

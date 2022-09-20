@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, StatusBar} from 'react-native';
 import {colors} from './colors';
 
 export const globalStyles = StyleSheet.create({
@@ -7,5 +7,6 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: colors.background,
     flex: 1,
     justifyContent: 'center',
+    marginTop: StatusBar.currentHeight,
   },
 });

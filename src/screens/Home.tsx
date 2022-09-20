@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useAppDispatch, useAppSelector} from '../store/hooks/hooks';
 import {onAuthStateChanged} from 'firebase/auth';
@@ -19,6 +19,7 @@ import {size} from '../theme/fonts';
 import {List} from '../store/slices/todoList/todoListSlice';
 import useTodoList from '../hooks/useTodoList';
 import useTodo from '../hooks/useTodo';
+import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'homeScreen'> {}
@@ -28,7 +29,6 @@ const Home = ({navigation: {navigate}}: Props) => {
   const {listData, isLoading} = useTodoList();
   const {todosData} = useTodo();
   const {id} = useAppSelector(state => state.user);
-  const algo = 'algo';
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -46,8 +46,7 @@ const Home = ({navigation: {navigate}}: Props) => {
     navigate('addTodoScreen', {ListData});
 
   return (
-    <SafeAreaView
-      style={[globalStyles.container, {marginTop: StatusBar.currentHeight}]}>
+    <SafeAreaView style={[globalStyles.container]}>
       <StatusBar
         backgroundColor={colors.background}
         translucent={true}
@@ -73,7 +72,17 @@ const Home = ({navigation: {navigate}}: Props) => {
         navigate={navigateAddTodo}
         todos={todosData}
       />
-      <Menu />
+      <Menu>
+        <ItemMenuOption
+          actionOption={() => console.log('Theme')}
+          textOption="Theme"
+          divider
+        />
+        <ItemMenuOption
+          actionOption={() => console.log('Sign out')}
+          textOption="Sign out"
+        />
+      </Menu>
     </SafeAreaView>
   );
 };

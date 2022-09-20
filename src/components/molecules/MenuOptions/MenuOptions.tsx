@@ -5,6 +5,7 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import React from 'react';
 import {colors} from '../../../theme/colors';
@@ -15,27 +16,17 @@ import {useAppDispatch} from '../../../store/hooks/hooks';
 const {width} = Dimensions.get('screen');
 
 interface Props {
-  options: OptionsType[];
+  children: React.ReactNode;
+  closeModal: () => void;
 }
 
-const MenuOptions = ({options}: Props) => {
+const MenuOptions = ({closeModal, children}: Props) => {
   const dispatch = useAppDispatch();
+
   return (
-    <View style={styles.menuContainer}>
-      <FlatList
-        data={options}
-        keyExtractor={item => item.option}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item, index}) => (
-          <TouchableOpacity
-            style={styles.option}
-            onPress={() => item.onPress(dispatch)}>
-            <Text style={styles.textOption}>{item.option}</Text>
-            {index !== options.length - 1 && <View style={styles.divider} />}
-          </TouchableOpacity>
-        )}
-      />
-    </View>
+    <Pressable style={{flex: 1}} onPress={closeModal}>
+      <View style={styles.menuContainer}>{children}</View>
+    </Pressable>
   );
 };
 
@@ -45,6 +36,10 @@ const styles = StyleSheet.create({
   menuContainer: {
     width: width * 0.4,
     backgroundColor: colors.background,
+    borderRadius: 5,
+    position: 'absolute',
+    top: 55,
+    right: 20,
 
     shadowColor: '#000',
     shadowOffset: {
@@ -55,23 +50,5 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
 
     elevation: 3,
-  },
-  option: {
-    height: 40,
-    justifyContent: 'center',
-    width: '100%',
-    paddingHorizontal: 10,
-  },
-  textOption: {
-    color: colors.text,
-    fontSize: size.font14,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: '#dee2e6',
-    bottom: 0,
-    left: '8%',
-    position: 'absolute',
-    width: '100%',
   },
 });

@@ -23,7 +23,7 @@ const {width} = Dimensions.get('screen');
 const SliderList = ({boxes, loading, navigate, todos}: Props) => {
   return (
     <View style={styles.sliderContainer}>
-      {!loading && boxes.length > 0 && todos.length > 0 ? (
+      {!loading && boxes.length > 0 ? (
         <FlatList
           data={boxes}
           keyExtractor={item => item.id}
