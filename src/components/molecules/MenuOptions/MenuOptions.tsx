@@ -1,19 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  FlatList,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import {StyleSheet, View, Dimensions, Pressable} from 'react-native';
 import React from 'react';
 import {colors} from '../../../theme/colors';
-import {OptionsType} from '../../../utils/MenuOptions';
-import {size} from '../../../theme/fonts';
 import {useAppDispatch} from '../../../store/hooks/hooks';
 
-const {width} = Dimensions.get('screen');
+const {width, height} = Dimensions.get('screen');
 
 interface Props {
   children: React.ReactNode;
@@ -24,7 +14,7 @@ const MenuOptions = ({closeModal, children}: Props) => {
   const dispatch = useAppDispatch();
 
   return (
-    <Pressable style={{flex: 1}} onPress={closeModal}>
+    <Pressable style={styles.closeMenu} onPress={closeModal}>
       <View style={styles.menuContainer}>{children}</View>
     </Pressable>
   );
@@ -33,6 +23,13 @@ const MenuOptions = ({closeModal, children}: Props) => {
 export default MenuOptions;
 
 const styles = StyleSheet.create({
+  closeMenu: {
+    height,
+    position: 'absolute',
+    right: -20,
+    top: -20,
+    width,
+  },
   menuContainer: {
     width: width * 0.4,
     backgroundColor: colors.background,

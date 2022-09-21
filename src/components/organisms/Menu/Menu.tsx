@@ -13,15 +13,11 @@ const Menu = ({children}: Props) => {
   return (
     <View style={styles.menu}>
       <ButtonMenu onPress={() => setShowMenu(!showMenu)} />
-      <Modal
-        visible={showMenu}
-        transparent
-        onRequestClose={() => setShowMenu(!showMenu)}
-        animationType="fade">
+      {showMenu && (
         <MenuOptions closeModal={() => setShowMenu(!showMenu)}>
           {children}
         </MenuOptions>
-      </Modal>
+      )}
     </View>
   );
 };
