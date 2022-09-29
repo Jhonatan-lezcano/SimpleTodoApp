@@ -10,11 +10,11 @@ import {Todo} from '../store/slices/todoList/todoListSlice';
 const useTodo = () => {
   const dispatch = useAppDispatch();
   const {id} = useAppSelector(state => state.user);
-  const {listData, todosData} = useAppSelector(state => state.todoList);
+  const {todosData} = useAppSelector(state => state.todoList);
 
   useEffect(() => {
     getTodos(id, dispatch);
-  }, [listData]);
+  }, [id]);
 
   const updateTodo = (data: Todo) => {
     updateTodosPerId(data);
@@ -22,7 +22,9 @@ const useTodo = () => {
 
   const deleteTodo = (id: string) => deleteTodoService(id);
 
-  return {todosData, updateTodo, deleteTodo};
+  const deleteAllTodos = (idList: string) => console.log(id);
+
+  return {todosData, updateTodo, deleteTodo, deleteAllTodos};
 };
 
 export default useTodo;

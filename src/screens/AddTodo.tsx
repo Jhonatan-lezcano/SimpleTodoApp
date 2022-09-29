@@ -13,7 +13,10 @@ import {colors} from '../theme/colors';
 import InputBorder from '../components/atoms/InputBorder/InputBorder';
 import ButtonPlus from '../components/atoms/ButtonPlus/ButtonPlus';
 import {globalStyles} from '../theme/globalStyles';
-import {createTodo} from '../firebase/services/app/todosServices';
+import {
+  createTodo,
+  deleteAllTodos,
+} from '../firebase/services/app/todosServices';
 import Todos from '../components/atoms/Todo/Todo';
 import useTodo from '../hooks/useTodo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -23,9 +26,9 @@ import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
 
-const AddTodo = ({route}: Props) => {
+const AddTodo = ({route, navigation: {navigate}}: Props) => {
   const [title, setTitle] = useState('');
-  const {todosData, updateTodo, deleteTodo} = useTodo();
+  const {todosData, updateTodo, deleteTodo, deleteAllTodos} = useTodo();
   const {
     ListData: {color, name, id, idUser},
   } = route.params;
@@ -38,6 +41,11 @@ const AddTodo = ({route}: Props) => {
 
     createTodo({idUser, title, completed: false, idList: id});
     setTitle('');
+  };
+
+  const deleteList = () => {
+    deleteAllTodos(id);
+    // navigate('homeScreen');
   };
 
   return (
@@ -81,7 +89,12 @@ const AddTodo = ({route}: Props) => {
       <Menu>
         <ItemMenuOption
           textOption="Delete list"
-          actionOption={() => console.log('Delete list')}
+          actionOption={deleteList}
+          divider
+        />
+        <ItemMenuOption
+          textOption="Delete All todos"
+          actionOption={() => deleteAllTodos(id)}
         />
       </Menu>
     </View>

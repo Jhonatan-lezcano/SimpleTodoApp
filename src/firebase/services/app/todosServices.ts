@@ -1,14 +1,13 @@
 import {
   collection,
-  addDoc,
   doc,
   setDoc,
   query,
   where,
   onSnapshot,
-  orderBy,
   updateDoc,
   deleteDoc,
+  getDocs,
 } from 'firebase/firestore';
 import {db} from '../../../../config/firebase';
 import {
@@ -36,51 +35,53 @@ interface todos {
 
 // List services
 export const createList = async (data: list) => {
-  console.log(data);
   const newList = doc(collection(db, 'Lists'));
   await setDoc(newList, data);
   console.log('List created successfully');
 };
 
-export const getLists = (idUser: string, dispatch: AppDispatch) => {
+export const getLists = async (idUser: string, dispatch: AppDispatch) => {
   dispatch(loading(true));
   const q = query(collection(db, 'Lists'), where('idUser', '==', idUser));
+
   const unsuscribe = onSnapshot(q, querySnapshot => {
-    const lists: list[] = [];
-    querySnapshot.forEach(doc => {
-      lists.push({
-        id: doc.id,
-        idUser: doc.data().idUser,
-        color: doc.data().color,
-        name: doc.data().name,
-      });
-    });
+    const lists = querySnapshot.docs.map(list => ({
+      ...list.data(),
+      id: list.id,
+    }));
     dispatch(getArrayList(lists));
-    dispatch(loading(false));
   });
+  dispatch(loading(false));
+};
+
+export const deleteAllTodos = async (idList: string) => {
+  const collectionRef = collection(db, 'Todos');
+  const q = query(collectionRef, where('idList', '==', idList));
+  const snapshot = await getDocs(q);
+
+  const results = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
+  results.forEach(async result => {
+    const docRef = doc(db, 'Todos', result.id);
+    await deleteDoc(docRef);
+  });
+  console.log('se elimino con exito');
 };
 
 //Todos services
 export const createTodo = async (data: todos) => {
-  console.log(data);
   const newList = doc(collection(db, 'Todos'));
   await setDoc(newList, data);
   console.log('Todo created successfully');
 };
 
-export const getTodos = (idUser: string, dispatch: AppDispatch) => {
+export const getTodos = async (idUser: string, dispatch: AppDispatch) => {
   const q = query(collection(db, 'Todos'), where('idUser', '==', idUser));
+
   const unsuscribe = onSnapshot(q, querySnapshot => {
-    const todos: todos[] = [];
-    querySnapshot.forEach(doc => {
-      todos.push({
-        id: doc.id,
-        idUser: doc.data().idUser,
-        idList: doc.data().idList,
-        title: doc.data().title,
-        completed: doc.data().completed,
-      });
-    });
+    const todos = querySnapshot.docs.map(todo => ({
+      ...todo.data(),
+      id: todo.id,
+    }));
     dispatch(getArrayTodos(todos));
   });
 };
