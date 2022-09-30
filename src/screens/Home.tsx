@@ -16,7 +16,7 @@ import Spacer from '../components/atoms/Spacer/Spacer';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import Menu from '../components/organisms/Menu/Menu';
 import {size} from '../theme/fonts';
-import {List} from '../store/slices/todoList/todoListSlice';
+import {getCurrentList, List} from '../store/slices/todoList/todoListSlice';
 import useList from '../hooks/useList';
 import useTodo from '../hooks/useTodo';
 import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
@@ -46,9 +46,10 @@ const Home = ({navigation: {navigate}}: Props) => {
 
   const navigateAddList = () => navigate('addListScreen');
 
-  const navigateAddTodo = (ListData: List) =>
+  const navigateAddTodo = (ListData: List) => {
+    dispatch(getCurrentList(ListData));
     navigate('addTodoScreen', {ListData});
-
+  };
   return (
     <SafeAreaView style={[globalStyles.container]}>
       <StatusBar

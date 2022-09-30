@@ -13,39 +13,33 @@ import {colors} from '../theme/colors';
 import InputBorder from '../components/atoms/InputBorder/InputBorder';
 import ButtonPlus from '../components/atoms/ButtonPlus/ButtonPlus';
 import {globalStyles} from '../theme/globalStyles';
-import {
-  createTodo,
-  deleteAllTodos,
-} from '../firebase/services/app/todosServices';
+import {createTodo} from '../firebase/services/app/todosServices';
 import Todos from '../components/atoms/Todo/Todo';
 import useTodo from '../hooks/useTodo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Menu from '../components/organisms/Menu/Menu';
 import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
+import useList from '../hooks/useList';
+import {useAppSelector} from '../store/hooks/hooks';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
 
-const AddTodo = ({route, navigation: {navigate}}: Props) => {
+const AddTodo = ({navigation: {navigate}}: Props) => {
   const [title, setTitle] = useState('');
-  const {todosData, updateTodo, deleteTodo, deleteAllTodos} = useTodo();
-  const {
-    ListData: {color, name, id, idUser},
-  } = route.params;
-  const todos = todosData.filter(item => item.idList === id);
-  const tasks = todos.length;
-  const tasksCompleted = todos.filter(item => item.completed).length;
+  const {todosData, updateTodo, deleteTodo, deleteAllTodos, currentTodos} =
+    useTodo();
+  const {deleteList} = useList();
+  const {currentList} = useAppSelector(state => state.todoList);
+  const {id, idUser, name, color} = currentList;
+  const tasks = currentTodos.length;
+  const tasksCompleted = currentTodos.filter(item => item.completed).length;
 
   const onSubmit = () => {
     if (title === '') return console.log('este campo no puede estar vacio');
 
     createTodo({idUser, title, completed: false, idList: id});
     setTitle('');
-  };
-
-  const deleteList = () => {
-    deleteAllTodos(id);
-    // navigate('homeScreen');
   };
 
   return (
@@ -59,7 +53,7 @@ const AddTodo = ({route, navigation: {navigate}}: Props) => {
 
       <GestureHandlerRootView style={[styles.section, {flex: 3}]}>
         <FlatList
-          data={todos}
+          data={currentTodos}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => (
             <Todos
@@ -89,7 +83,10 @@ const AddTodo = ({route, navigation: {navigate}}: Props) => {
       <Menu>
         <ItemMenuOption
           textOption="Delete list"
-          actionOption={deleteList}
+          actionOption={() => {
+            deleteList(id);
+            navigate('homeScreen');
+          }}
           divider
         />
         <ItemMenuOption

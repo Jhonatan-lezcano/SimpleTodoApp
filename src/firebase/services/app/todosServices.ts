@@ -50,21 +50,14 @@ export const getLists = async (idUser: string, dispatch: AppDispatch) => {
       id: list.id,
     }));
     dispatch(getArrayList(lists));
+    dispatch(loading(false));
   });
-  dispatch(loading(false));
 };
 
-export const deleteAllTodos = async (idList: string) => {
-  const collectionRef = collection(db, 'Todos');
-  const q = query(collectionRef, where('idList', '==', idList));
-  const snapshot = await getDocs(q);
-
-  const results = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
-  results.forEach(async result => {
-    const docRef = doc(db, 'Todos', result.id);
-    await deleteDoc(docRef);
-  });
-  console.log('se elimino con exito');
+export const deleteListService = async (idList: string) => {
+  console.log('delete');
+  const listRef = doc(db, 'Lists', idList);
+  await deleteDoc(listRef);
 };
 
 //Todos services
@@ -74,7 +67,7 @@ export const createTodo = async (data: todos) => {
   console.log('Todo created successfully');
 };
 
-export const getTodos = async (idUser: string, dispatch: AppDispatch) => {
+export const getTodos = (idUser: string, dispatch: AppDispatch) => {
   const q = query(collection(db, 'Todos'), where('idUser', '==', idUser));
 
   const unsuscribe = onSnapshot(q, querySnapshot => {
@@ -84,6 +77,10 @@ export const getTodos = async (idUser: string, dispatch: AppDispatch) => {
     }));
     dispatch(getArrayTodos(todos));
   });
+};
+
+export const getTodosPerIdList = () => {
+  console.log('ay dios');
 };
 
 export const updateTodosPerId = async (data: Todo) => {
@@ -96,4 +93,17 @@ export const updateTodosPerId = async (data: Todo) => {
 export const deleteTodoService = async (id: string) => {
   const todoRef = doc(db, 'Todos', id);
   await deleteDoc(todoRef);
+};
+
+export const deleteAllTodosService = async (idList: string) => {
+  const collectionRef = collection(db, 'Todos');
+  const q = query(collectionRef, where('idList', '==', idList));
+  const snapshot = await getDocs(q);
+
+  const results = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
+  results.forEach(async result => {
+    const docRef = doc(db, 'Todos', result.id);
+    await deleteDoc(docRef);
+  });
+  console.log('se elimino con exito');
 };

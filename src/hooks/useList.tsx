@@ -1,7 +1,10 @@
 import React, {useEffect} from 'react';
-import {getLists, getTodos} from '../firebase/services/app/todosServices';
+import {
+  getLists,
+  deleteAllTodosService,
+  deleteListService,
+} from '../firebase/services/app/todosServices';
 import {useAppDispatch, useAppSelector} from '../store/hooks/hooks';
-import {getArrayList} from '../store/slices/todoList/todoListSlice';
 
 const useList = () => {
   const dispatch = useAppDispatch();
@@ -10,9 +13,15 @@ const useList = () => {
 
   useEffect(() => {
     getLists(id, dispatch);
+    console.log(id);
   }, [id]);
 
-  return {listData, isLoading};
+  const deleteList = (idList: string) => {
+    deleteAllTodosService(idList);
+    deleteListService(idList);
+  };
+
+  return {listData, isLoading, deleteList};
 };
 
 export default useList;

@@ -40,7 +40,7 @@ const SliderList = ({boxes, loading, navigate, todos}: Props) => {
             );
           }}
         />
-      ) : !loading && boxes.length === 0 && todos.length === 0 ? (
+      ) : !loading && boxes.length === 0 ? (
         <Text style={{color: colors.text}}>No hay listas</Text>
       ) : (
         loading && (

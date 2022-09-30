@@ -16,7 +16,6 @@ const ItemSlider = ({listData, index, navigate, todos}: Props) => {
   const todosInfo = todos.filter(item => item.idList === id);
   const completed = todosInfo.filter(item => item.completed).length;
   const pending = todosInfo.length - completed;
-
   return (
     <View
       style={[
