@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {
   deleteAllTodosService,
+  deleteListService,
   deleteTodoService,
   getTodos,
+  getTodosPerIdList,
   updateTodosPerId,
 } from '../firebase/services/app/todosServices';
 import {useAppDispatch, useAppSelector} from '../store/hooks/hooks';
-import {getCurrentTodos, Todo} from '../store/slices/todoList/todoListSlice';
+import {Todo} from '../store/slices/todoList/todoListSlice';
 
 const useTodo = () => {
   const dispatch = useAppDispatch();
@@ -16,18 +18,18 @@ const useTodo = () => {
   );
 
   useEffect(() => {
-    getTodos(id, dispatch);
-  }, [id]);
-
-  useEffect(() => {
     if (!currentList.id) return;
-    const todos = todosData.filter(item => item.idList === currentList.id);
-    dispatch(getCurrentTodos(todos));
-  }, [currentList, todosData]);
+    getTodosPerIdList(currentList.id, dispatch);
+  }, [currentList]);
 
   const updateTodo = (data: Todo) => {
     updateTodosPerId(data);
     console.log('completed');
+  };
+
+  const deleteList = (idList: string) => {
+    deleteAllTodosService(idList);
+    deleteListService(idList);
   };
 
   const deleteTodo = (id: string) => deleteTodoService(id);
@@ -40,6 +42,7 @@ const useTodo = () => {
     deleteTodo,
     deleteAllTodos,
     currentTodos,
+    deleteList,
   };
 };
 

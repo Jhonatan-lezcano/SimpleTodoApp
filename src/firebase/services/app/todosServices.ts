@@ -13,6 +13,7 @@ import {db} from '../../../../config/firebase';
 import {
   getArrayList,
   getArrayTodos,
+  getCurrentTodos,
   loading,
   Todo,
 } from '../../../store/slices/todoList/todoListSlice';
@@ -79,8 +80,15 @@ export const getTodos = (idUser: string, dispatch: AppDispatch) => {
   });
 };
 
-export const getTodosPerIdList = () => {
-  console.log('ay dios');
+export const getTodosPerIdList = (idList: string, dispatch: AppDispatch) => {
+  const q = query(collection(db, 'Todos'), where('idList', '==', idList));
+  const unsuscribe = onSnapshot(q, querySnapshot => {
+    const todos = querySnapshot.docs.map(todo => ({
+      ...todo.data(),
+      id: todo.id,
+    }));
+    dispatch(getCurrentTodos(todos));
+  });
 };
 
 export const updateTodosPerId = async (data: Todo) => {

@@ -5,14 +5,10 @@ import AddList from '../screens/AddList';
 import AddTodo from '../screens/AddTodo';
 import {Todo, List} from '../store/slices/todoList/todoListSlice';
 
-interface PropsAddTodo {
-  ListData: List;
-}
-
 export type RootStackAppParams = {
   homeScreen: undefined;
   addListScreen: undefined;
-  addTodoScreen: PropsAddTodo;
+  addTodoScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackAppParams>();

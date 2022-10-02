@@ -19,7 +19,6 @@ import useTodo from '../hooks/useTodo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Menu from '../components/organisms/Menu/Menu';
 import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
-import useList from '../hooks/useList';
 import {useAppSelector} from '../store/hooks/hooks';
 
 interface Props
@@ -27,9 +26,8 @@ interface Props
 
 const AddTodo = ({navigation: {navigate}}: Props) => {
   const [title, setTitle] = useState('');
-  const {todosData, updateTodo, deleteTodo, deleteAllTodos, currentTodos} =
+  const {updateTodo, deleteTodo, deleteAllTodos, deleteList, currentTodos} =
     useTodo();
-  const {deleteList} = useList();
   const {currentList} = useAppSelector(state => state.todoList);
   const {id, idUser, name, color} = currentList;
   const tasks = currentTodos.length;
@@ -91,7 +89,9 @@ const AddTodo = ({navigation: {navigate}}: Props) => {
         />
         <ItemMenuOption
           textOption="Delete All todos"
-          actionOption={() => deleteAllTodos(id)}
+          actionOption={() => {
+            deleteAllTodos(id);
+          }}
         />
       </Menu>
     </View>

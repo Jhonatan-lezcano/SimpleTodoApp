@@ -48,7 +48,7 @@ const Home = ({navigation: {navigate}}: Props) => {
 
   const navigateAddTodo = (ListData: List) => {
     dispatch(getCurrentList(ListData));
-    navigate('addTodoScreen', {ListData});
+    navigate('addTodoScreen');
   };
   return (
     <SafeAreaView style={[globalStyles.container]}>

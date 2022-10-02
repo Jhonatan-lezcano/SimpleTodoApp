@@ -1,9 +1,5 @@
 import React, {useEffect} from 'react';
-import {
-  getLists,
-  deleteAllTodosService,
-  deleteListService,
-} from '../firebase/services/app/todosServices';
+import {getLists, getTodos} from '../firebase/services/app/todosServices';
 import {useAppDispatch, useAppSelector} from '../store/hooks/hooks';
 
 const useList = () => {
@@ -13,15 +9,11 @@ const useList = () => {
 
   useEffect(() => {
     getLists(id, dispatch);
+    getTodos(id, dispatch);
     console.log(id);
   }, [id]);
 
-  const deleteList = (idList: string) => {
-    deleteAllTodosService(idList);
-    deleteListService(idList);
-  };
-
-  return {listData, isLoading, deleteList};
+  return {listData, isLoading};
 };
 
 export default useList;
