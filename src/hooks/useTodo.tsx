@@ -12,7 +12,6 @@ import {Todo} from '../store/slices/todoList/todoListSlice';
 
 const useTodo = () => {
   const dispatch = useAppDispatch();
-  const {id} = useAppSelector(state => state.user);
   const {todosData, currentList, currentTodos} = useAppSelector(
     state => state.todoList,
   );

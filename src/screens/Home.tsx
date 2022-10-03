@@ -16,7 +16,11 @@ import Spacer from '../components/atoms/Spacer/Spacer';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import Menu from '../components/organisms/Menu/Menu';
 import {size} from '../theme/fonts';
-import {getCurrentList, List} from '../store/slices/todoList/todoListSlice';
+import {
+  getCurrentList,
+  getCurrentTodos,
+  List,
+} from '../store/slices/todoList/todoListSlice';
 import useList from '../hooks/useList';
 import useTodo from '../hooks/useTodo';
 import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
@@ -28,8 +32,7 @@ let didInit = false;
 
 const Home = ({navigation: {navigate}}: Props) => {
   const dispatch = useAppDispatch();
-  const {listData, isLoading} = useList();
-  const {todosData} = useTodo();
+  const {listData, isLoading, todosData} = useList();
 
   useEffect(() => {
     if (!didInit) {

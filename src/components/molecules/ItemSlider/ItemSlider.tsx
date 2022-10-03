@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {List, Todo} from '../../../store/slices/todoList/todoListSlice';
 import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
+import useList from '../../../hooks/useList';
 
 interface Props {
   listData: List;
@@ -16,6 +17,7 @@ const ItemSlider = ({listData, index, navigate, todos}: Props) => {
   const todosInfo = todos.filter(item => item.idList === id);
   const completed = todosInfo.filter(item => item.completed).length;
   const pending = todosInfo.length - completed;
+
   return (
     <View
       style={[
@@ -26,7 +28,8 @@ const ItemSlider = ({listData, index, navigate, todos}: Props) => {
       ]}>
       <TouchableOpacity
         style={[styles.list, {backgroundColor: color}]}
-        onPress={() => navigate(listData)}>
+        onPress={() => navigate(listData)}
+        activeOpacity={0.8}>
         <Text style={[styles.listTitle, styles.textColor]} numberOfLines={1}>
           {name}
         </Text>

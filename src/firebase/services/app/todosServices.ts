@@ -81,6 +81,7 @@ export const getTodos = (idUser: string, dispatch: AppDispatch) => {
 };
 
 export const getTodosPerIdList = (idList: string, dispatch: AppDispatch) => {
+  dispatch(getCurrentTodos([]));
   const q = query(collection(db, 'Todos'), where('idList', '==', idList));
   const unsuscribe = onSnapshot(q, querySnapshot => {
     const todos = querySnapshot.docs.map(todo => ({

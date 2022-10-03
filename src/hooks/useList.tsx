@@ -5,7 +5,9 @@ import {useAppDispatch, useAppSelector} from '../store/hooks/hooks';
 const useList = () => {
   const dispatch = useAppDispatch();
   const {id} = useAppSelector(state => state.user);
-  const {listData, isLoading} = useAppSelector(state => state.todoList);
+  const {listData, isLoading, todosData} = useAppSelector(
+    state => state.todoList,
+  );
 
   useEffect(() => {
     getLists(id, dispatch);
@@ -13,7 +15,7 @@ const useList = () => {
     console.log(id);
   }, [id]);
 
-  return {listData, isLoading};
+  return {listData, isLoading, todosData};
 };
 
 export default useList;
