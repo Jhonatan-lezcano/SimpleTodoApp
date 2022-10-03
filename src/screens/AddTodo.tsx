@@ -4,6 +4,7 @@ import {
   View,
   KeyboardAvoidingView,
   FlatList,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -20,6 +21,9 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Menu from '../components/organisms/Menu/Menu';
 import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
 import {useAppSelector} from '../store/hooks/hooks';
+import NoItemsFound from '../components/molecules/NoItemsFound/NoItemsFound';
+import AnimationView from '../components/atoms/AnimationView/AnimationView';
+import animationTodo from '../assets/LottieFiles/todoAnimation.json';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
@@ -48,21 +52,31 @@ const AddTodo = ({navigation: {navigate}}: Props) => {
           {tasksCompleted}/{tasks}
         </Text>
       </View>
-
-      <GestureHandlerRootView style={[styles.section, {flex: 3}]}>
-        <FlatList
-          data={currentTodos}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => (
-            <Todos
-              todo={item}
-              updateTodo={updateTodo}
-              deleteTodo={deleteTodo}
-            />
-          )}
-          contentContainerStyle={{paddingVertical: 60}}
-        />
-      </GestureHandlerRootView>
+      {currentTodos.length > 0 ? (
+        <GestureHandlerRootView style={[styles.section, {flex: 3}]}>
+          <FlatList
+            data={currentTodos}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({item}) => (
+              <Todos
+                todo={item}
+                updateTodo={updateTodo}
+                deleteTodo={deleteTodo}
+              />
+            )}
+            contentContainerStyle={{paddingVertical: 60}}
+          />
+        </GestureHandlerRootView>
+      ) : (
+        <View style={[styles.section, {flex: 3, justifyContent: 'center'}]}>
+          <NoItemsFound
+            Animation={() =>
+              AnimationView({animation: animationTodo, size: '80%'})
+            }
+            text="No to-dos found, start creating your to-dos :)"
+          />
+        </View>
+      )}
       <KeyboardAvoidingView style={[styles.section, styles.footer]}>
         <InputBorder
           placeHolder="New todo"

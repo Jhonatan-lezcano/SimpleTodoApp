@@ -9,7 +9,10 @@ import {
 } from 'react-native';
 import {List, Todo} from '../../../store/slices/todoList/todoListSlice';
 import {colors} from '../../../theme/colors';
+import AnimationView from '../../atoms/AnimationView/AnimationView';
 import ItemSlider from '../../molecules/ItemSlider/ItemSlider';
+import NoItemsFound from '../../molecules/NoItemsFound/NoItemsFound';
+import animationArrow from '../../../assets/LottieFiles/notFoundList.json';
 
 interface Props {
   boxes: List[];
@@ -41,7 +44,12 @@ const SliderList = ({boxes, loading, navigate, todos}: Props) => {
           }}
         />
       ) : !loading && boxes.length === 0 ? (
-        <Text style={{color: colors.text}}>No hay listas</Text>
+        <NoItemsFound
+          Animation={() =>
+            AnimationView({animation: animationArrow, size: 200})
+          }
+          text="No lists found, start creating your lists :)"
+        />
       ) : (
         loading && (
           <View
