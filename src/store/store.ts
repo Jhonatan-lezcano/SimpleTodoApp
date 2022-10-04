@@ -3,12 +3,14 @@ import authSlice from './slices/auth/authSlice';
 import counterSlice from './slices/counter/counterSlice';
 import userSlice from './slices/user/userSlice';
 import todoListSlice from './slices/todoList/todoListSlice';
+import themeSlice from './slices/theme/themeSlice';
 
 const rootReducer = combineReducers({
   counter: counterSlice,
   authUser: authSlice,
   user: userSlice,
   todoList: todoListSlice,
+  theme: themeSlice,
 });
 
 export const store = configureStore({

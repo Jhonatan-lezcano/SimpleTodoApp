@@ -1,9 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
-import AnimationView from '../../atoms/AnimationView/AnimationView';
-import animationArrow from '../../../assets/LottieFiles/todoAnimation.json';
+import useTheme from '../../../hooks/useTheme';
 
 interface Props {
   Animation?: () => JSX.Element;
@@ -11,10 +9,11 @@ interface Props {
 }
 
 const NoItemsFound = ({Animation, text}: Props) => {
+  const {colors} = useTheme();
   return (
     <View style={styles.container}>
       {Animation && <Animation />}
-      <Text style={styles.text}>{text}</Text>
+      <Text style={[styles.text, {color: colors.text}]}>{text}</Text>
     </View>
   );
 };
@@ -29,7 +28,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   text: {
-    color: colors.text,
     fontSize: size.font24,
     textAlign: 'center',
   },

@@ -6,6 +6,7 @@ import {colors} from '../../../theme/colors';
 import InputLine, {InputTypes} from '../../atoms/InputLine/InputLine';
 import {size} from '../../../theme/fonts';
 import TextMessageError from '../../atoms/TextMessageError/TextMessageError';
+import useTheme from '../../../hooks/useTheme';
 
 interface Props {
   control: SignUpForm | any;
@@ -28,9 +29,10 @@ const InputLineLabel = ({
   rules,
 }: Props) => {
   const [secureText, setSecureText] = useState(password);
+  const {colors} = useTheme();
   return (
     <View style={{width}}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, {color: colors.textSecondary}]}>{label}</Text>
       <InputLine
         inputTypes={inputTypes}
         password={secureText}
@@ -72,13 +74,7 @@ InputLineLabel.defaultProps = {
 
 const styles = StyleSheet.create({
   label: {
-    color: colors.textSecondary,
     paddingBottom: 5,
-  },
-  error: {
-    color: colors.tertiary,
-    fontSize: size.font12,
-    height: 16,
   },
   btnPassword: {
     bottom: 25,

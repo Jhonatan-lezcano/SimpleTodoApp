@@ -4,16 +4,13 @@ import {
   View,
   KeyboardAvoidingView,
   FlatList,
-  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import {size} from '../theme/fonts';
-import {colors} from '../theme/colors';
 import InputBorder from '../components/atoms/InputBorder/InputBorder';
 import ButtonPlus from '../components/atoms/ButtonPlus/ButtonPlus';
-import {globalStyles} from '../theme/globalStyles';
 import {createTodo} from '../firebase/services/app/todosServices';
 import Todos from '../components/atoms/Todo/Todo';
 import useTodo from '../hooks/useTodo';
@@ -24,11 +21,13 @@ import {useAppSelector} from '../store/hooks/hooks';
 import NoItemsFound from '../components/molecules/NoItemsFound/NoItemsFound';
 import AnimationView from '../components/atoms/AnimationView/AnimationView';
 import animationTodo from '../assets/LottieFiles/todoAnimation.json';
+import useTheme from '../hooks/useTheme';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
 
 const AddTodo = ({navigation: {navigate}}: Props) => {
+  const {globalContainer, colors} = useTheme();
   const [title, setTitle] = useState('');
   const {updateTodo, deleteTodo, deleteAllTodos, deleteList, currentTodos} =
     useTodo();
@@ -45,10 +44,10 @@ const AddTodo = ({navigation: {navigate}}: Props) => {
   };
 
   return (
-    <View style={[globalStyles.container]}>
+    <View style={[globalContainer.container]}>
       <View style={[styles.section, styles.header, {borderColor: color}]}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.taskCount}>
+        <Text style={[styles.title, {color: colors.text}]}>{name}</Text>
+        <Text style={[styles.taskCount, {color: colors.textSecondary}]}>
           {tasksCompleted}/{tasks}
         </Text>
       </View>
@@ -125,12 +124,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
   },
   title: {
-    color: colors.text,
     fontSize: size.font30,
     fontWeight: '800',
   },
   taskCount: {
-    color: colors.textSecondary,
     fontWeight: '600',
     marginTop: 4,
     marginBottom: 16,

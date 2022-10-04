@@ -1,7 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {colors} from '../../../theme/colors';
-import {size} from '../../../theme/fonts';
+import useTheme from '../../../hooks/useTheme';
 
 interface Props {
   title: string;
@@ -12,9 +11,12 @@ interface Props {
 }
 
 const Title = ({title, secondWord, divider, textAlign, fontSize}: Props) => {
+  const {colors} = useTheme();
   return (
     <View style={styles.container}>
-      {divider && <View style={styles.divider} />}
+      {divider && (
+        <View style={[styles.divider, {backgroundColor: colors.secondary}]} />
+      )}
       <Text
         style={[
           styles.title,
@@ -22,12 +24,20 @@ const Title = ({title, secondWord, divider, textAlign, fontSize}: Props) => {
             fontSize,
             textAlign: textAlign,
             width: !divider ? '100%' : 'auto',
+            color: colors.text,
           },
         ]}>
         {title}
-        {secondWord && <Text style={styles.secondWord}> {secondWord}</Text>}
+        {secondWord && (
+          <Text style={[styles.secondWord, {color: colors.secondary}]}>
+            {' '}
+            {secondWord}
+          </Text>
+        )}
       </Text>
-      {divider && <View style={styles.divider} />}
+      {divider && (
+        <View style={[styles.divider, {backgroundColor: colors.secondary}]} />
+      )}
     </View>
   );
 };
@@ -45,17 +55,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title: {
-    color: colors.text,
     fontWeight: 'bold',
     paddingHorizontal: 20,
   },
   secondWord: {
-    color: colors.secondary,
     fontWeight: 'normal',
   },
   divider: {
     alignSelf: 'center',
-    backgroundColor: colors.secondary,
     flex: 1,
     height: 1,
   },

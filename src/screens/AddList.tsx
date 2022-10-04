@@ -1,19 +1,18 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import InputBorder from '../components/atoms/InputBorder/InputBorder';
-import {globalStyles} from '../theme/globalStyles';
 import Title from '../components/atoms/Title/Title';
 import {size} from '../theme/fonts';
 import Spacer from '../components/atoms/Spacer/Spacer';
 import {Picker} from '@react-native-picker/picker';
 import {dataPalettes} from '../utils/colorPalettes';
-import {colors} from '../theme/colors';
 import useColorPalettes from '../hooks/useColorPalettes';
 import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
 import {createList} from '../firebase/services/app/todosServices';
 import {useAppSelector} from '../store/hooks/hooks';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
+import useTheme from '../hooks/useTheme';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addListScreen'> {}
@@ -23,6 +22,7 @@ const AddList = ({navigation: {navigate}}: Props) => {
   const {selected, changeSelected, palette, changeColor, color} =
     useColorPalettes();
   const {id} = useAppSelector(state => state.user);
+  const {globalContainer, colors} = useTheme();
 
   const onSubmit = () => {
     if (name === '') return console.log('este campo no puede estar vacio');
@@ -32,7 +32,7 @@ const AddList = ({navigation: {navigate}}: Props) => {
   };
 
   return (
-    <View style={globalStyles.container}>
+    <View style={globalContainer.container}>
       <View style={{alignSelf: 'stretch', paddingHorizontal: 42}}>
         <Title
           title="Create Todo List"

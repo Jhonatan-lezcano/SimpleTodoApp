@@ -1,16 +1,18 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native';
 import {Todo} from '../../../store/slices/todoList/todoListSlice';
-import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
 import Spacer from '../Spacer/Spacer';
 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import ButtonAdjustableRadius from '../ButtonAdjustableRadius/ButtonAdjustableRadius';
+import useTheme from '../../../hooks/useTheme';
 
 const rightActions = (
   onDeleteHandler: () => void,
   progress: Animated.AnimatedInterpolation,
+  background: string,
+  textColor: string,
 ) => {
   const opacity = progress.interpolate({
     inputRange: [-100, -30, 0],
@@ -22,11 +24,11 @@ const rightActions = (
     <Animated.View style={{opacity}}>
       <ButtonAdjustableRadius
         radius="straight"
-        backgroundColor={colors.tertiary}
+        backgroundColor={background}
         title="Delete"
         onPress={onDeleteHandler}
         width={80}
-        titleColor={colors.background}
+        titleColor={textColor}
       />
     </Animated.View>
   );
@@ -39,6 +41,7 @@ interface Props {
 }
 
 const Todos = ({todo, updateTodo, deleteTodo}: Props) => {
+  const {colors} = useTheme();
   const {title, completed, id} = todo;
 
   const onDeleteHandler = () => deleteTodo(id);
@@ -46,7 +49,12 @@ const Todos = ({todo, updateTodo, deleteTodo}: Props) => {
   return (
     <Swipeable
       renderRightActions={(dragX, progress) =>
-        rightActions(onDeleteHandler, progress)
+        rightActions(
+          onDeleteHandler,
+          progress,
+          colors.tertiary,
+          colors.background,
+        )
       }>
       <View style={styles.todoContainer}>
         <TouchableOpacity onPress={() => updateTodo(todo)}>
@@ -66,7 +74,7 @@ const Todos = ({todo, updateTodo, deleteTodo}: Props) => {
           style={[
             styles.title,
             {
-              color: completed ? colors.textSecondary : colors.black,
+              color: completed ? colors.textSecondary : colors.text,
               textDecorationLine: completed ? 'line-through' : 'none',
             },
           ]}>

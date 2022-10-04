@@ -1,8 +1,7 @@
-import {Modal, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import ButtonMenu from '../../atoms/ButtonMenu/ButtonMenu';
 import MenuOptions from '../../molecules/MenuOptions/MenuOptions';
-import {Options} from '../../../utils/MenuOptions';
 
 interface Props {
   children: React.ReactNode;

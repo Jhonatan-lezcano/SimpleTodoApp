@@ -8,11 +8,11 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {List, Todo} from '../../../store/slices/todoList/todoListSlice';
-import {colors} from '../../../theme/colors';
 import AnimationView from '../../atoms/AnimationView/AnimationView';
 import ItemSlider from '../../molecules/ItemSlider/ItemSlider';
 import NoItemsFound from '../../molecules/NoItemsFound/NoItemsFound';
 import animationArrow from '../../../assets/LottieFiles/notFoundList.json';
+import useTheme from '../../../hooks/useTheme';
 
 interface Props {
   boxes: List[];
@@ -24,6 +24,7 @@ interface Props {
 const {width} = Dimensions.get('screen');
 
 const SliderList = ({boxes, loading, navigate, todos}: Props) => {
+  const {colors} = useTheme();
   return (
     <View style={styles.sliderContainer}>
       {!loading && boxes.length > 0 ? (

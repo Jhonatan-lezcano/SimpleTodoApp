@@ -1,14 +1,12 @@
 import React, {useEffect} from 'react';
-import {StatusBar, StyleSheet, Text} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useAppDispatch, useAppSelector} from '../store/hooks/hooks';
+import {useAppDispatch} from '../store/hooks/hooks';
 import {onAuthStateChanged} from 'firebase/auth';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-import {colors} from '../theme/colors';
 import {auth} from '../../config/firebase';
 import {getUser} from '../store/slices/user/userSlice';
-import {globalStyles} from '../theme/globalStyles';
 import Title from '../components/atoms/Title/Title';
 import SliderList from '../components/organisms/SliderList/SliderList';
 import AddList from '../components/molecules/AddList/AddList';
@@ -16,14 +14,10 @@ import Spacer from '../components/atoms/Spacer/Spacer';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import Menu from '../components/organisms/Menu/Menu';
 import {size} from '../theme/fonts';
-import {
-  getCurrentList,
-  getCurrentTodos,
-  List,
-} from '../store/slices/todoList/todoListSlice';
+import {getCurrentList, List} from '../store/slices/todoList/todoListSlice';
 import useList from '../hooks/useList';
-import useTodo from '../hooks/useTodo';
 import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
+import useTheme from '../hooks/useTheme';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'homeScreen'> {}
@@ -33,6 +27,7 @@ let didInit = false;
 const Home = ({navigation: {navigate}}: Props) => {
   const dispatch = useAppDispatch();
   const {listData, isLoading, todosData} = useList();
+  const {changeTheme, globalContainer, colors, dark} = useTheme();
 
   useEffect(() => {
     if (!didInit) {
@@ -53,12 +48,16 @@ const Home = ({navigation: {navigate}}: Props) => {
     dispatch(getCurrentList(ListData));
     navigate('addTodoScreen');
   };
+
+  const prueba = () => {
+    console.log('Sign out');
+  };
   return (
-    <SafeAreaView style={[globalStyles.container]}>
+    <SafeAreaView style={[globalContainer.container]}>
       <StatusBar
         backgroundColor={colors.background}
         translucent={true}
-        barStyle="dark-content"
+        barStyle={dark ? 'light-content' : 'dark-content'}
       />
 
       <Title
@@ -82,13 +81,19 @@ const Home = ({navigation: {navigate}}: Props) => {
       />
       <Menu>
         <ItemMenuOption
-          actionOption={() => console.log('Theme')}
-          textOption="Theme"
+          actionOption={changeTheme}
+          textOption={dark ? 'Light Mode' : 'Dark Mode'}
           divider
+          iconSrc={
+            dark
+              ? require('../assets/sol.png')
+              : require('../assets/nightMode.png')
+          }
         />
         <ItemMenuOption
-          actionOption={() => console.log('Sign out')}
+          actionOption={prueba}
           textOption="Sign out"
+          iconSrc={require('../assets/exit.png')}
         />
       </Menu>
     </SafeAreaView>
