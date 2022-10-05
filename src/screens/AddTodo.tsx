@@ -22,13 +22,29 @@ import NoItemsFound from '../components/molecules/NoItemsFound/NoItemsFound';
 import AnimationView from '../components/atoms/AnimationView/AnimationView';
 import animationTodo from '../assets/LottieFiles/todoAnimation.json';
 import useTheme from '../hooks/useTheme';
+import {SubmitHandler, useForm} from 'react-hook-form';
+import Input from '../components/atoms/Input/Input';
+import {Required} from '../utils/validations';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addTodoScreen'> {}
 
+interface TodoInputs {
+  title: string;
+}
+
 const AddTodo = ({navigation: {navigate}}: Props) => {
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+    resetField,
+  } = useForm<TodoInputs>({
+    defaultValues: {
+      title: '',
+    },
+  });
   const {globalContainer, colors} = useTheme();
-  const [title, setTitle] = useState('');
   const {updateTodo, deleteTodo, deleteAllTodos, deleteList, currentTodos} =
     useTodo();
   const {currentList} = useAppSelector(state => state.todoList);
@@ -36,11 +52,9 @@ const AddTodo = ({navigation: {navigate}}: Props) => {
   const tasks = currentTodos.length;
   const tasksCompleted = currentTodos.filter(item => item.completed).length;
 
-  const onSubmit = () => {
-    if (title === '') return console.log('este campo no puede estar vacio');
-
-    createTodo({idUser, title, completed: false, idList: id});
-    setTitle('');
+  const onSubmit: SubmitHandler<TodoInputs> = data => {
+    createTodo({idUser, title: data.title, completed: false, idList: id});
+    resetField('title');
   };
 
   return (
@@ -77,14 +91,24 @@ const AddTodo = ({navigation: {navigate}}: Props) => {
         </View>
       )}
       <KeyboardAvoidingView style={[styles.section, styles.footer]}>
-        <InputBorder
+        {/* <InputBorder
           placeHolder="New todo"
           onChange={setTitle}
           value={title}
           style={{flex: 1, marginRight: 10}}
+        /> */}
+        <Input
+          control={control}
+          err={errors}
+          name="title"
+          outline="borders"
+          placeholder="New todo"
+          rules={Required}
+          style={{flex: 1, marginRight: 10}}
+          width="auto"
         />
         <ButtonPlus
-          onPress={() => onSubmit()}
+          onPress={handleSubmit(onSubmit)}
           padding={12}
           sizePlus={size.font16}
           background={color}

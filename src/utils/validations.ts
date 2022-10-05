@@ -20,3 +20,7 @@ export const EmailRequired = {
     message: 'Email is invalid',
   },
 };
+
+export const Required = {
+  required: 'This field is required',
+};

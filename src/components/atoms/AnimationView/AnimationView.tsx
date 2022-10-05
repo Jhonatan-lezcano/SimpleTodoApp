@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import Lottie, {AnimationObject} from 'lottie-react-native';
 import {View} from 'react-native';
 
@@ -8,9 +8,15 @@ interface Props {
 }
 
 const AnimationView = ({animation, size}: Props) => {
+  const animationRef = useRef<Lottie>(null);
+
+  useEffect(() => {
+    animationRef.current?.play();
+  }, []);
+
   return (
     <View style={{height: size, width: size}}>
-      <Lottie source={animation} autoPlay loop />
+      <Lottie ref={animationRef} source={animation} autoPlay loop />
     </View>
   );
 };

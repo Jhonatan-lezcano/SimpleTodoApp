@@ -13,21 +13,33 @@ import {useAppSelector} from '../store/hooks/hooks';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import useTheme from '../hooks/useTheme';
+import Input from '../components/atoms/Input/Input';
+import {SubmitHandler, useForm} from 'react-hook-form';
+import {Required} from '../utils/validations';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'addListScreen'> {}
 
+interface ListInputs {
+  name: string;
+}
 const AddList = ({navigation: {navigate}}: Props) => {
-  const [name, setName] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<ListInputs>({
+    defaultValues: {
+      name: '',
+    },
+  });
   const {selected, changeSelected, palette, changeColor, color} =
     useColorPalettes();
   const {id} = useAppSelector(state => state.user);
   const {globalContainer, colors} = useTheme();
 
-  const onSubmit = () => {
-    if (name === '') return console.log('este campo no puede estar vacio');
-
-    createList({idUser: id, name, color});
+  const onSubmit: SubmitHandler<ListInputs> = data => {
+    createList({idUser: id, name: data.name, color});
     navigate('homeScreen');
   };
 
@@ -40,7 +52,15 @@ const AddList = ({navigation: {navigate}}: Props) => {
           textAlign="center"
         />
         <Spacer vertical={20} />
-        <InputBorder placeHolder="List name?" value={name} onChange={setName} />
+        {/* <InputBorder placeHolder="List name?" value={name} onChange={setName} /> */}
+        <Input
+          control={control}
+          err={errors}
+          name="name"
+          outline="borders"
+          placeholder="List name?"
+          rules={Required}
+        />
         <Spacer vertical={20} />
         <Picker
           selectedValue={selected}
@@ -69,7 +89,7 @@ const AddList = ({navigation: {navigate}}: Props) => {
           radius="semicircular"
           backgroundColor={color}
           titleColor={colors.background}
-          onPress={() => onSubmit()}
+          onPress={handleSubmit(onSubmit)}
           shadow
         />
       </View>

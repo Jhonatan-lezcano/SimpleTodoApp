@@ -4,7 +4,7 @@ import {size} from '../../../theme/fonts';
 import useTheme from '../../../hooks/useTheme';
 
 interface Props {
-  message: string;
+  message: any;
 }
 
 const TextMessageError = ({message}: Props) => {

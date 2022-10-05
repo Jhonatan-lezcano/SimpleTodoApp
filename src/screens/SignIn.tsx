@@ -4,7 +4,6 @@ import {colors} from '../theme/colors';
 import {globalStyles} from '../theme/globalStyles';
 import {size} from '../theme/fonts';
 import Spacer from '../components/atoms/Spacer/Spacer';
-import InputLineLabel from '../components/molecules/InputLineLabel/InputLineLabel';
 import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
 import ButtonText from '../components/atoms/ButtonText/ButtonText';
 import {useForm, SubmitHandler} from 'react-hook-form';
@@ -13,6 +12,7 @@ import {signIn} from '../firebase/services/login/signIn';
 import {useAppDispatch} from '../store/hooks/hooks';
 import {isAuth} from '../store/slices/auth/authSlice';
 import TextMessageError from '../components/atoms/TextMessageError/TextMessageError';
+import Input from '../components/atoms/Input/Input';
 
 interface SignInForm {
   email: string;
@@ -48,23 +48,23 @@ const SignIn = () => {
       style={[globalStyles.container, {paddingHorizontal: 30}]}>
       <Text style={styles.title}>Login</Text>
       <Spacer vertical={20} />
-      <InputLineLabel
-        label="Email"
-        width="100%"
-        inputTypes="email-address"
+      <Input
         control={control}
         err={errors}
-        rules={EmailRequired}
+        inputTypes="email-address"
+        label="Email"
         name="email"
+        outline="line"
+        rules={EmailRequired}
       />
       <Spacer vertical={40} />
-      <InputLineLabel
-        label="Password"
-        width="100%"
-        password
-        name="password"
+      <Input
         control={control}
         err={errors}
+        label="Password"
+        name="password"
+        outline="line"
+        password
         rules={PasswordRequire}
       />
       <Spacer vertical={18} />
