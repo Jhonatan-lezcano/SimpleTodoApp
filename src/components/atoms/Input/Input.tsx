@@ -7,10 +7,10 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {colors} from '../../../theme/colors';
 import {SignUpForm} from '../../../screens/SignUp';
 import {Controller} from 'react-hook-form';
 import TextMessageError from '../TextMessageError/TextMessageError';
+import useTheme from '../../../hooks/useTheme';
 
 export type InputTypes =
   | 'default'
@@ -51,6 +51,7 @@ const Input = ({
   err,
 }: Props) => {
   const [secureText, setSecureText] = useState(password);
+  const {colors} = useTheme();
 
   return (
     <View style={[style, {width}]}>
@@ -72,7 +73,8 @@ const Input = ({
                 ? styles.line
                 : outline === 'borders' && styles.borders,
               {
-                borderColor: error ? colors.tertiary : borderColor,
+                color: colors.primary,
+                borderColor: error ? colors.danger : borderColor,
                 paddingHorizontal:
                   outline === 'line' ? 5 : outline === 'borders' ? 15 : 0,
               },
@@ -124,12 +126,10 @@ const styles = StyleSheet.create({
   },
   line: {
     borderBottomWidth: 1,
-    color: colors.primary,
   },
   borders: {
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 6,
-    color: colors.primary,
   },
   btnPassword: {
     bottom: 25,

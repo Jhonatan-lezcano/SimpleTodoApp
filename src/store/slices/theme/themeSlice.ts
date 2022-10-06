@@ -9,6 +9,9 @@ export interface Colors {
   tertiary: string;
   textSecondary: string;
   shadowColor: string;
+  update: string;
+  success: string;
+  danger: string;
 }
 
 export interface ThemeState {

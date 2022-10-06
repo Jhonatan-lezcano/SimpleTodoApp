@@ -1,6 +1,5 @@
 import {KeyboardAvoidingView, Platform, StyleSheet, Text} from 'react-native';
 import React, {useState} from 'react';
-import {colors} from '../theme/colors';
 import {globalStyles} from '../theme/globalStyles';
 import {size} from '../theme/fonts';
 import Spacer from '../components/atoms/Spacer/Spacer';
@@ -13,6 +12,7 @@ import {useAppDispatch} from '../store/hooks/hooks';
 import {isAuth} from '../store/slices/auth/authSlice';
 import TextMessageError from '../components/atoms/TextMessageError/TextMessageError';
 import Input from '../components/atoms/Input/Input';
+import useTheme from '../hooks/useTheme';
 
 interface SignInForm {
   email: string;
@@ -32,6 +32,7 @@ const SignIn = () => {
   });
   const [errorSignIn, setErrorSignIn] = useState('');
   const dispatch = useAppDispatch();
+  const {colors} = useTheme();
 
   const authChange = () => {
     dispatch(isAuth());
@@ -46,7 +47,7 @@ const SignIn = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[globalStyles.container, {paddingHorizontal: 30}]}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={[styles.title, {color: colors.primary}]}>Login</Text>
       <Spacer vertical={20} />
       <Input
         control={control}
@@ -56,6 +57,7 @@ const SignIn = () => {
         name="email"
         outline="line"
         rules={EmailRequired}
+        borderColor={colors.primary}
       />
       <Spacer vertical={40} />
       <Input
@@ -66,6 +68,7 @@ const SignIn = () => {
         outline="line"
         password
         rules={PasswordRequire}
+        borderColor={colors.primary}
       />
       <Spacer vertical={18} />
       <TextMessageError message={errorSignIn} />
@@ -93,7 +96,6 @@ export default SignIn;
 const styles = StyleSheet.create({
   title: {
     alignSelf: 'flex-start',
-    color: colors.primary,
     fontSize: size.font36,
     fontWeight: '700',
     width: '100%',

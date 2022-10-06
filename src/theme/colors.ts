@@ -22,6 +22,9 @@ export const lightMode: ThemeState = {
     tertiary: '#e63946',
     textSecondary: '#A4A4A4',
     shadowColor: '#000',
+    update: '#064789',
+    success: '#388659',
+    danger: '#bf0603',
   },
 };
 
@@ -35,5 +38,8 @@ export const darkMode: ThemeState = {
     tertiary: '#2cb67d',
     textSecondary: '#94a1b2',
     shadowColor: '#ffffff',
+    update: '#064789',
+    success: '#388659',
+    danger: '#bf0603',
   },
 };
