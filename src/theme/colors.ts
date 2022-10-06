@@ -31,10 +31,10 @@ export const lightMode: ThemeState = {
 export const darkMode: ThemeState = {
   dark: true,
   colors: {
-    primary: '#7f5af0',
+    primary: '#BB86FC',
     background: '#16161a',
     text: '#fffffe',
-    secondary: '#72757e',
+    secondary: '#03DAC5',
     tertiary: '#2cb67d',
     textSecondary: '#94a1b2',
     shadowColor: '#ffffff',

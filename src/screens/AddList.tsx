@@ -60,11 +60,12 @@ const AddList = ({navigation: {navigate}}: Props) => {
           outline="borders"
           placeholder="List name?"
           rules={Required}
+          borderColor={colors.primary}
         />
         <Spacer vertical={20} />
         <Picker
           selectedValue={selected}
-          style={{color: colors.primary}}
+          style={{color: colors.text}}
           onValueChange={itemValue => changeSelected(itemValue)}>
           {dataPalettes.map(color => (
             <Picker.Item
