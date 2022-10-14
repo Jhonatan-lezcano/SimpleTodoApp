@@ -18,6 +18,8 @@ import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/B
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {EmailRequired, PasswordRequire} from '../utils/validations';
 import {registerUser} from '../firebase/services/login/registerUser';
+import Input from '../components/atoms/Input/Input';
+import useTheme from '../hooks/useTheme';
 
 interface Props
   extends NativeStackScreenProps<RootStackAuthParams, 'signUpScreen'> {}
@@ -43,6 +45,7 @@ const SignUp = ({navigation: {navigate}}: Props) => {
       confirmPassword: '',
     },
   });
+  const {colors} = useTheme();
   const pwd = watch('password');
 
   const onSubmit: SubmitHandler<SignUpForm> = data => {
@@ -59,7 +62,7 @@ const SignUp = ({navigation: {navigate}}: Props) => {
     <KeyboardAvoidingView
       style={[globalStyles.container, {paddingHorizontal: 30}]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <Text style={styles.title}>Get Started</Text>
+      <Text style={[styles.title, {color: colors.primary}]}>Get Started</Text>
       <View style={{flexDirection: 'row', width: '100%', paddingTop: 5}}>
         <Text style={{color: colors.textSecondary}}>
           Already have a account?
@@ -72,29 +75,30 @@ const SignUp = ({navigation: {navigate}}: Props) => {
         />
       </View>
       <Spacer vertical={50} />
-      <InputLineLabel
+      <Input
         label="Email"
-        width="100%"
         control={control}
         err={errors}
         name="email"
         rules={EmailRequired}
         inputTypes="email-address"
+        outline="line"
+        borderColor={colors.primary}
       />
       <Spacer vertical={10} />
-      <InputLineLabel
+      <Input
         label="Password"
-        width="100%"
         control={control}
         err={errors}
         name="password"
         password
         rules={PasswordRequire}
+        outline="line"
+        borderColor={colors.primary}
       />
       <Spacer vertical={10} />
-      <InputLineLabel
+      <Input
         label="Confirm Password"
-        width="100%"
         control={control}
         err={errors}
         name="confirmPassword"
@@ -102,6 +106,8 @@ const SignUp = ({navigation: {navigate}}: Props) => {
         rules={{
           validate: (value: string) => value === pwd || 'Password do not match',
         }}
+        outline="line"
+        borderColor={colors.primary}
       />
       <Spacer vertical={27} />
       <ButtonAdjustableRadius
@@ -124,7 +130,6 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.primary,
     fontSize: size.font28,
     fontWeight: '700',
     width: '100%',
