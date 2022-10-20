@@ -1,7 +1,7 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
+import useTheme from '../../../hooks/useTheme';
 
 interface Props {
   radius: 'circular' | 'semicircular' | 'straight';
@@ -22,16 +22,17 @@ const ButtonAdjustableRadius = ({
   backgroundColor,
   titleColor,
 }: Props) => {
+  const {colors} = useTheme();
   const shadowButton = {
-    shadowColor: '#000',
+    shadowColor: colors.shadowColor,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
 
-    elevation: 5,
+    elevation: 2,
   };
   return (
     <TouchableOpacity

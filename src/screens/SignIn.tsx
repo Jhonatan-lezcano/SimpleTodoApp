@@ -1,6 +1,5 @@
 import {KeyboardAvoidingView, Platform, StyleSheet, Text} from 'react-native';
 import React, {useState} from 'react';
-import {globalStyles} from '../theme/globalStyles';
 import {size} from '../theme/fonts';
 import Spacer from '../components/atoms/Spacer/Spacer';
 import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
@@ -32,7 +31,7 @@ const SignIn = () => {
   });
   const [errorSignIn, setErrorSignIn] = useState('');
   const dispatch = useAppDispatch();
-  const {colors} = useTheme();
+  const {colors, globalContainer} = useTheme();
 
   const authChange = () => {
     dispatch(isAuth());
@@ -46,7 +45,7 @@ const SignIn = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={[globalStyles.container, {paddingHorizontal: 30}]}>
+      style={[globalContainer.container, {paddingHorizontal: 30}]}>
       <Text style={[styles.title, {color: colors.primary}]}>Login</Text>
       <Spacer vertical={20} />
       <Input

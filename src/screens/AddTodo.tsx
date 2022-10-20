@@ -5,11 +5,10 @@ import {
   KeyboardAvoidingView,
   FlatList,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackAppParams} from '../navigation/StackAppNavigation';
 import {size} from '../theme/fonts';
-import InputBorder from '../components/atoms/InputBorder/InputBorder';
 import ButtonPlus from '../components/atoms/ButtonPlus/ButtonPlus';
 import {createTodo} from '../firebase/services/app/todosServices';
 import Todos from '../components/atoms/Todo/Todo';
@@ -77,7 +76,8 @@ const AddTodo = ({navigation: {navigate}}: Props) => {
                 deleteTodo={deleteTodo}
               />
             )}
-            contentContainerStyle={{paddingVertical: 60}}
+            contentContainerStyle={{paddingVertical: 20}}
+            showsVerticalScrollIndicator={false}
           />
         </GestureHandlerRootView>
       ) : (
@@ -91,12 +91,6 @@ const AddTodo = ({navigation: {navigate}}: Props) => {
         </View>
       )}
       <KeyboardAvoidingView style={[styles.section, styles.footer]}>
-        {/* <InputBorder
-          placeHolder="New todo"
-          onChange={setTitle}
-          value={title}
-          style={{flex: 1, marginRight: 10}}
-        /> */}
         <Input
           control={control}
           err={errors}
@@ -106,6 +100,7 @@ const AddTodo = ({navigation: {navigate}}: Props) => {
           rules={Required}
           style={{flex: 1, marginRight: 10}}
           width="auto"
+          borderColor={color}
         />
         <ButtonPlus
           onPress={handleSubmit(onSubmit)}

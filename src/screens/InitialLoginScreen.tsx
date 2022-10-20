@@ -1,19 +1,19 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {globalStyles} from '../theme/globalStyles';
 import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
 import {size} from '../theme/fonts';
-import {colors} from '../theme/colors';
 import Spacer from '../components/atoms/Spacer/Spacer';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackAuthParams} from '../navigation/StackAuthNavigation';
+import useTheme from '../hooks/useTheme';
 
 interface Props
   extends NativeStackScreenProps<RootStackAuthParams, 'InitialScreen'> {}
 
 const InitialLoginScreen = ({navigation: {navigate}}: Props) => {
+  const {colors, globalContainer} = useTheme();
   return (
-    <View style={[globalStyles.container, {paddingHorizontal: 30}]}>
+    <View style={[globalContainer.container, {paddingHorizontal: 30}]}>
       <View style={styles.logo}>
         <Text style={{fontSize: size.font38, color: colors.secondary}}>
           Logo app

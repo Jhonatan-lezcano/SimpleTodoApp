@@ -1,6 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {lightMode} from '../../../theme/colors';
 
+export interface AlertColors {
+  update: string;
+  success: string;
+  danger: string;
+}
+
 export interface Colors {
   primary: string;
   background: string;
@@ -9,9 +15,7 @@ export interface Colors {
   tertiary: string;
   textSecondary: string;
   shadowColor: string;
-  update: string;
-  success: string;
-  danger: string;
+  alertColors: AlertColors;
 }
 
 export interface ThemeState {

@@ -74,7 +74,7 @@ const Input = ({
                 : outline === 'borders' && styles.borders,
               {
                 color: colors.primary,
-                borderColor: error ? colors.danger : borderColor,
+                borderColor: error ? colors.alertColors.danger : borderColor,
                 paddingHorizontal:
                   outline === 'line' ? 5 : outline === 'borders' ? 15 : 0,
               },

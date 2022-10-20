@@ -7,13 +7,11 @@ import {
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {globalStyles} from '../theme/globalStyles';
-import {colors} from '../theme/colors';
 import {size} from '../theme/fonts';
 import ButtonText from '../components/atoms/ButtonText/ButtonText';
 import Spacer from '../components/atoms/Spacer/Spacer';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackAuthParams} from '../navigation/StackAuthNavigation';
-import InputLineLabel from '../components/molecules/InputLineLabel/InputLineLabel';
 import ButtonAdjustableRadius from '../components/atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {EmailRequired, PasswordRequire} from '../utils/validations';
@@ -45,7 +43,7 @@ const SignUp = ({navigation: {navigate}}: Props) => {
       confirmPassword: '',
     },
   });
-  const {colors} = useTheme();
+  const {colors, globalContainer} = useTheme();
   const pwd = watch('password');
 
   const onSubmit: SubmitHandler<SignUpForm> = data => {
@@ -60,7 +58,7 @@ const SignUp = ({navigation: {navigate}}: Props) => {
 
   return (
     <KeyboardAvoidingView
-      style={[globalStyles.container, {paddingHorizontal: 30}]}
+      style={[globalContainer.container, {paddingHorizontal: 30}]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Text style={[styles.title, {color: colors.primary}]}>Get Started</Text>
       <View style={{flexDirection: 'row', width: '100%', paddingTop: 5}}>

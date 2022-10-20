@@ -52,8 +52,8 @@ const Todos = ({todo, updateTodo, deleteTodo}: Props) => {
         rightActions(
           onDeleteHandler,
           progress,
-          colors.tertiary,
-          colors.background,
+          colors.alertColors.danger,
+          colors.text,
         )
       }>
       <View style={styles.todoContainer}>
@@ -71,6 +71,7 @@ const Todos = ({todo, updateTodo, deleteTodo}: Props) => {
         </TouchableOpacity>
         <Spacer horizontal={15} />
         <Text
+          numberOfLines={1}
           style={[
             styles.title,
             {
@@ -90,7 +91,7 @@ export default Todos;
 const styles = StyleSheet.create({
   todoContainer: {
     paddingVertical: 15,
-    paddingLeft: 32,
+    paddingHorizontal: 32,
     flexDirection: 'row',
     alignItems: 'center',
   },

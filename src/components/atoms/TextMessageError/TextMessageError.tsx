@@ -8,9 +8,13 @@ interface Props {
 }
 
 const TextMessageError = ({message}: Props) => {
-  const {colors} = useTheme();
+  const {
+    colors: {alertColors},
+  } = useTheme();
   return (
-    <Text style={[styles.textStyle, {color: colors.tertiary}]}>{message}</Text>
+    <Text style={[styles.textStyle, {color: alertColors.danger}]}>
+      {message}
+    </Text>
   );
 };
 
