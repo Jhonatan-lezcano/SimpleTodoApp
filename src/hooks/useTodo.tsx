@@ -1,4 +1,6 @@
+import {collection, onSnapshot, query, where} from 'firebase/firestore';
 import React, {useEffect, useState} from 'react';
+import {db} from '../../config/firebase';
 import {
   deleteAllTodosService,
   deleteListService,
@@ -8,7 +10,7 @@ import {
   updateTodosPerId,
 } from '../firebase/services/app/todosServices';
 import {useAppDispatch, useAppSelector} from '../store/hooks/hooks';
-import {Todo} from '../store/slices/todoList/todoListSlice';
+import {getCurrentTodos, Todo} from '../store/slices/todoList/todoListSlice';
 
 const useTodo = () => {
   const dispatch = useAppDispatch();
@@ -18,8 +20,22 @@ const useTodo = () => {
 
   useEffect(() => {
     if (!currentList.id) return;
-    getTodosPerIdList(currentList.id, dispatch);
-  }, [currentList]);
+
+    dispatch(getCurrentTodos([]));
+    const collectionRef = collection(db, 'Todos');
+    const q = query(collectionRef, where('idList', '==', currentList.id));
+    const unsubscribe = onSnapshot(q, querySnapshot => {
+      dispatch(
+        getCurrentTodos(
+          querySnapshot.docs.map(todo => ({
+            ...todo.data(),
+            id: todo.id,
+          })),
+        ),
+      );
+    });
+    return unsubscribe;
+  }, []);
 
   const updateTodo = (data: Todo) => {
     updateTodosPerId(data);

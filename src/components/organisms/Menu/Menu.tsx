@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   menu: {
     alignItems: 'flex-end',
     position: 'absolute',
-    top: 20,
+    top: 60,
     right: 20,
   },
 });

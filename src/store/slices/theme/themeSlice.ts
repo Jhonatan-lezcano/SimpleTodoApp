@@ -15,6 +15,7 @@ export interface Colors {
   tertiary: string;
   textSecondary: string;
   shadowColor: string;
+  white: string;
   alertColors: AlertColors;
 }
 

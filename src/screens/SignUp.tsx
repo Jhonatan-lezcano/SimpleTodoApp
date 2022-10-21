@@ -6,7 +6,6 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {globalStyles} from '../theme/globalStyles';
 import {size} from '../theme/fonts';
 import ButtonText from '../components/atoms/ButtonText/ButtonText';
 import Spacer from '../components/atoms/Spacer/Spacer';
@@ -62,9 +61,7 @@ const SignUp = ({navigation: {navigate}}: Props) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Text style={[styles.title, {color: colors.primary}]}>Get Started</Text>
       <View style={{flexDirection: 'row', width: '100%', paddingTop: 5}}>
-        <Text style={{color: colors.textSecondary}}>
-          Already have a account?
-        </Text>
+        <Text style={{color: colors.text}}>Already have a account?</Text>
         <Spacer horizontal={5} />
         <ButtonText
           title="Sign in"
@@ -115,7 +112,7 @@ const SignUp = ({navigation: {navigate}}: Props) => {
         titleColor={colors.background}
       />
       <Spacer vertical={20} />
-      <Text style={{color: colors.textSecondary}}>
+      <Text style={{color: colors.text}}>
         By Sign up you agree to our{' '}
         <Text style={styles.terms}>Privacy Policy</Text> and{' '}
         <Text style={styles.terms}>Terms and Condition</Text>

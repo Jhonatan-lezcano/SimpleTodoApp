@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SignUpForm} from '../../../screens/SignUp';
 
-import {colors} from '../../../theme/colors';
 import InputLine, {InputTypes} from '../../atoms/Input/Input';
 import {size} from '../../../theme/fonts';
 import TextMessageError from '../../atoms/TextMessageError/TextMessageError';

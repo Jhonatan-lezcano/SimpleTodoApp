@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {List, Todo} from '../../../store/slices/todoList/todoListSlice';
-import {colors} from '../../../theme/colors';
 import {size} from '../../../theme/fonts';
 import useList from '../../../hooks/useList';
+import useTheme from '../../../hooks/useTheme';
 
 interface Props {
   listData: List;
@@ -13,10 +13,15 @@ interface Props {
 }
 
 const ItemSlider = ({listData, index, navigate, todos}: Props) => {
+  const {colors} = useTheme();
   const {name, color, id} = listData;
   const todosInfo = todos.filter(item => item.idList === id);
   const completed = todosInfo.filter(item => item.completed).length;
   const pending = todosInfo.length - completed;
+
+  const textColor = {
+    color: colors.white,
+  };
 
   return (
     <View
@@ -30,16 +35,16 @@ const ItemSlider = ({listData, index, navigate, todos}: Props) => {
         style={[styles.list, {backgroundColor: color}]}
         onPress={() => navigate(listData)}
         activeOpacity={0.8}>
-        <Text style={[styles.listTitle, styles.textColor]} numberOfLines={1}>
+        <Text style={[styles.listTitle, textColor]} numberOfLines={1}>
           {name}
         </Text>
         <View style={styles.containerInfo}>
-          <Text style={[styles.textColor, styles.count]}>{completed}</Text>
-          <Text style={[styles.textColor]}>Completed</Text>
+          <Text style={[textColor, styles.count]}>{completed}</Text>
+          <Text style={[textColor]}>Completed</Text>
         </View>
         <View style={styles.containerInfo}>
-          <Text style={[styles.textColor, styles.count]}>{pending}</Text>
-          <Text style={[styles.textColor]}>Pending to do</Text>
+          <Text style={[textColor, styles.count]}>{pending}</Text>
+          <Text style={[textColor]}>Pending to do</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -66,9 +71,6 @@ const styles = StyleSheet.create({
   listTitle: {
     fontSize: size.font22,
     fontWeight: '700',
-  },
-  textColor: {
-    color: colors.background,
   },
   containerInfo: {
     alignItems: 'center',

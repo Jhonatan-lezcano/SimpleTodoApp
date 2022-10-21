@@ -41,20 +41,6 @@ export const createList = async (data: list) => {
   console.log('List created successfully');
 };
 
-export const getLists = async (idUser: string, dispatch: AppDispatch) => {
-  dispatch(loading(true));
-  const q = query(collection(db, 'Lists'), where('idUser', '==', idUser));
-
-  const unsuscribe = onSnapshot(q, querySnapshot => {
-    const lists = querySnapshot.docs.map(list => ({
-      ...list.data(),
-      id: list.id,
-    }));
-    dispatch(getArrayList(lists));
-    dispatch(loading(false));
-  });
-};
-
 export const deleteListService = async (idList: string) => {
   console.log('delete');
   const listRef = doc(db, 'Lists', idList);
@@ -68,22 +54,28 @@ export const createTodo = async (data: todos) => {
   console.log('Todo created successfully');
 };
 
-export const getTodos = (idUser: string, dispatch: AppDispatch) => {
+export const getTodos = (
+  idUser: string,
+  dispatch: AppDispatch,
+  setunsubscribe: Function,
+) => {
   const q = query(collection(db, 'Todos'), where('idUser', '==', idUser));
 
-  const unsuscribe = onSnapshot(q, querySnapshot => {
+  const unsubscribe = onSnapshot(q, querySnapshot => {
     const todos = querySnapshot.docs.map(todo => ({
       ...todo.data(),
       id: todo.id,
     }));
     dispatch(getArrayTodos(todos));
   });
+
+  unsubscribe;
 };
 
 export const getTodosPerIdList = (idList: string, dispatch: AppDispatch) => {
   dispatch(getCurrentTodos([]));
   const q = query(collection(db, 'Todos'), where('idList', '==', idList));
-  const unsuscribe = onSnapshot(q, querySnapshot => {
+  const unsubscribe = onSnapshot(q, querySnapshot => {
     const todos = querySnapshot.docs.map(todo => ({
       ...todo.data(),
       id: todo.id,

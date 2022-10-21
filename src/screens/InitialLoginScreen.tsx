@@ -13,7 +13,11 @@ interface Props
 const InitialLoginScreen = ({navigation: {navigate}}: Props) => {
   const {colors, globalContainer} = useTheme();
   return (
-    <View style={[globalContainer.container, {paddingHorizontal: 30}]}>
+    <View
+      style={[
+        globalContainer.container,
+        {paddingHorizontal: 30, borderWidth: 1, borderColor: 'red'},
+      ]}>
       <View style={styles.logo}>
         <Text style={{fontSize: size.font38, color: colors.secondary}}>
           Logo app

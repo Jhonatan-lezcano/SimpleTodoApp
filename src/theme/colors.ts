@@ -1,21 +1,9 @@
 import {ThemeState} from '../store/slices/theme/themeSlice';
-export const colors = {
-  primary: '#1d3557',
-  background: '#f0efeb',
-  card: 'rgb(255, 255, 255)',
-  text: '#2D3436',
-  border: 'rgb(199, 199, 204)',
-  notification: 'rgb(255, 69, 58)',
-  secondary: '#457b9d',
-  tertiary: '#e63946',
-  textSecondary: '#A4A4A4',
-  black: '#212529',
-};
 
 export const alertColors = {
   update: '#064789',
   success: '#388659',
-  danger: '#bf0603',
+  danger: '#FF3A3A',
 };
 
 export const lightMode: ThemeState = {
@@ -28,6 +16,7 @@ export const lightMode: ThemeState = {
     tertiary: '#e63946',
     textSecondary: '#A4A4A4',
     shadowColor: '#000',
+    white: '#FFFFFF',
     alertColors,
   },
 };
@@ -42,6 +31,7 @@ export const darkMode: ThemeState = {
     tertiary: '#2cb67d',
     textSecondary: '#94a1b2',
     shadowColor: '#ffffff',
+    white: '#FFFFFF',
     alertColors,
   },
 };

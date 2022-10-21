@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useAppDispatch} from '../store/hooks/hooks';
-import {onAuthStateChanged} from 'firebase/auth';
+import {onAuthStateChanged, signOut} from 'firebase/auth';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {auth} from '../../config/firebase';
@@ -18,11 +18,10 @@ import {getCurrentList, List} from '../store/slices/todoList/todoListSlice';
 import useList from '../hooks/useList';
 import ItemMenuOption from '../components/atoms/ItemMenuOption/ItemMenuOption';
 import useTheme from '../hooks/useTheme';
+import {isAuth} from '../store/slices/auth/authSlice';
 
 interface Props
   extends NativeStackScreenProps<RootStackAppParams, 'homeScreen'> {}
-
-let didInit = false;
 
 const Home = ({navigation: {navigate}}: Props) => {
   const dispatch = useAppDispatch();
@@ -30,14 +29,11 @@ const Home = ({navigation: {navigate}}: Props) => {
   const {changeTheme, globalContainer, colors, dark} = useTheme();
 
   useEffect(() => {
-    if (!didInit) {
-      didInit = true;
-      onAuthStateChanged(auth, user => {
-        if (user) {
-          dispatch(getUser(user.uid));
-        }
-      });
-    }
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        dispatch(getUser(user.uid));
+      }
+    });
   }, []);
 
   console.log('render');
@@ -49,8 +45,12 @@ const Home = ({navigation: {navigate}}: Props) => {
     navigate('addTodoScreen');
   };
 
-  const prueba = () => {
-    console.log('Sign out');
+  const signOutSession = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(isAuth());
+      })
+      .catch(error => console.log(error));
   };
   return (
     <SafeAreaView style={[globalContainer.container]}>
@@ -91,7 +91,7 @@ const Home = ({navigation: {navigate}}: Props) => {
           }
         />
         <ItemMenuOption
-          actionOption={prueba}
+          actionOption={signOutSession}
           textOption="Sign out"
           iconSrc={require('../assets/exit.png')}
         />

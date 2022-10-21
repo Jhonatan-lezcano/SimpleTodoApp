@@ -73,7 +73,7 @@ const Input = ({
                 ? styles.line
                 : outline === 'borders' && styles.borders,
               {
-                color: colors.primary,
+                color: colors.text,
                 borderColor: error ? colors.alertColors.danger : borderColor,
                 paddingHorizontal:
                   outline === 'line' ? 5 : outline === 'borders' ? 15 : 0,

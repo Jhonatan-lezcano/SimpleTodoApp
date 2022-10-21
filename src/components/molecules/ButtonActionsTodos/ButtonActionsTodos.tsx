@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
 import ButtonAdjustableRadius from '../../atoms/ButtonAdjustableRadius/ButtonAdjustableRadius';
-import {colors} from '../../../theme/colors';
+import useTheme from '../../../hooks/useTheme';
 
 interface Props {
   background: string;
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const ButtonActionsTodos = ({background, title, onPress}: Props) => {
+  const {colors} = useTheme();
   return (
     <ButtonAdjustableRadius
       radius="straight"

@@ -10,11 +10,9 @@ const Main = () => {
   const {userAuth} = useAppSelector(state => state.authUser);
   const {colors} = useTheme();
   return (
-    <View style={{flex: 1, backgroundColor: colors.background}}>
-      <NavigationContainer>
-        {userAuth ? <StackAppNavigation /> : <StackAuthNavigation />}
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+      {userAuth ? <StackAppNavigation /> : <StackAuthNavigation />}
+    </NavigationContainer>
   );
 };
 
